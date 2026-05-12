@@ -5,7 +5,7 @@ import { AppHeader } from "@/components/AppHeader";
 export const Route = createFileRoute("/acessos")({
   head: () => ({
     meta: [
-      { title: "Acessos & Vias de Administração — Fast-Response Odontologia Anhanguera" },
+      { title: "Acessos & Vias de Administração — FAST-RESPONSE - Odontologia Santa Bárbara" },
       { name: "description", content: "Como obter acessos venosos, intramusculares, sublinguais e demais vias de administração de medicamentos em emergências odontológicas." },
     ],
   }),
@@ -312,7 +312,7 @@ function AcessosContent() {
 
       <footer className="border-t border-border bg-card/50">
         <div className="max-w-6xl mx-auto px-5 py-8 text-xs text-muted-foreground">
-          <p className="font-medium text-foreground mb-1">Fast-Response Odontologia Anhanguera</p>
+          <p className="font-medium text-foreground mb-1">FAST-RESPONSE - Odontologia Santa Bárbara</p>
           <p>Os procedimentos descritos exigem treinamento clínico. Em dúvida, prefira a via menos invasiva e acione o SAMU 192.</p>
         </div>
       </footer>

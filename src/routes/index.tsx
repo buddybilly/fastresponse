@@ -9,7 +9,7 @@ import { AppHeader } from "@/components/AppHeader";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Fast-Response Odontologia Anhanguera — Urgências Sistêmicas" },
+      { title: "FAST-RESPONSE - Odontologia Santa Bárbara — Urgências Sistêmicas" },
       { name: "description", content: "Guia clínico de bolso para urgências e emergências sistêmicas no consultório odontológico: protocolos, sinais, condutas, medicamentos e o que NÃO fazer." },
     ],
   }),
@@ -158,7 +158,7 @@ function Index() {
 
       <footer className="border-t border-border bg-card/50">
         <div className="max-w-6xl mx-auto px-5 py-8 text-xs text-muted-foreground">
-          <p className="font-medium text-foreground mb-1">Fast-Response Odontologia Anhanguera — Aviso clínico</p>
+          <p className="font-medium text-foreground mb-1">FAST-RESPONSE - Odontologia Santa Bárbara — Aviso clínico</p>
           <p>Este aplicativo é uma referência educacional. As condutas devem ser sempre ajustadas ao contexto clínico individual e seguir as diretrizes vigentes do CFO, AHA e protocolos institucionais.</p>
         </div>
       </footer>

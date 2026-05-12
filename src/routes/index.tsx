@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import {
-  Search, AlertTriangle, Activity, Pill, ListChecks, X, ChevronRight, Ban, Phone,
+  Search, AlertTriangle, Activity, Pill, ListChecks, X, ChevronRight, Ban, Phone, User, Users,
 } from "lucide-react";
-import { emergencias, categorias, type Emergency, type Severity } from "@/data/emergencies";
+import { emergencias, categorias, equipeIdeal, type Emergency, type Severity } from "@/data/emergencies";
 import { AppHeader } from "@/components/AppHeader";
 
 export const Route = createFileRoute("/")({
@@ -21,6 +21,17 @@ const severityStyle: Record<Severity, { label: string; cls: string; dot: string 
   alta: { label: "Alta", cls: "bg-warning/15 text-warning-foreground border-warning/30", dot: "bg-warning" },
   moderada: { label: "Moderada", cls: "bg-success/15 text-success-foreground border-success/30", dot: "bg-success" },
 };
+
+function TeamBadge({ n }: { n: number }) {
+  return (
+    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold border bg-accent/40 border-border text-accent-foreground" title={`Equipe ideal: ${n} pessoas`}>
+      {Array.from({ length: Math.min(n, 5) }).map((_, i) => (
+        <User key={i} className="w-2.5 h-2.5" />
+      ))}
+      <span className="ml-0.5">{n}</span>
+    </span>
+  );
+}
 
 function Index() {
   const [query, setQuery] = useState("");
@@ -137,10 +148,7 @@ function Index() {
                 <h4 className="font-semibold text-lg leading-tight mb-2">{e.nome}</h4>
                 <p className="text-sm text-muted-foreground line-clamp-2">{e.sinais[0]}{e.sinais[1] ? ` · ${e.sinais[1]}` : ""}</p>
                 <div className="mt-4 pt-4 border-t border-border flex items-center justify-between text-xs">
-                  <span className="text-muted-foreground flex items-center gap-1.5">
-                    <ListChecks className="w-3.5 h-3.5" />
-                    {e.conduta.length} passos
-                  </span>
+                  <TeamBadge n={equipeIdeal(e).numero} />
                   <span className="text-primary font-medium flex items-center gap-1">
                     Abrir <ChevronRight className="w-3.5 h-3.5" />
                   </span>

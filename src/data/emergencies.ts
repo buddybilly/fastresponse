@@ -10,7 +10,41 @@ export type Emergency = {
   naoFazer: string[];
   medicamentos: { nome: string; dose: string; via: string }[];
   observacoes?: string;
+  equipe?: number;
+  equipeDescricao?: string;
 };
+
+export function equipeIdeal(e: Emergency): { numero: number; descricao: string } {
+  if (e.equipe) {
+    return { numero: e.equipe, descricao: e.equipeDescricao ?? defaultDescricao(e.equipe) };
+  }
+  // Casos especiais por ID
+  const overrides: Record<string, { numero: number; descricao: string }> = {
+    pcr: { numero: 4, descricao: "Líder + compressor + ventilação/DEA + auxiliar de medicação" },
+    anafilaxia: { numero: 3, descricao: "Operador + auxiliar (medicação) + acionar SAMU" },
+    iam: { numero: 3, descricao: "Operador + auxiliar (MOV) + acionar SAMU" },
+    avc: { numero: 3, descricao: "Operador + auxiliar (sinais vitais) + acionar SAMU" },
+    eclampsia: { numero: 4, descricao: "Operador + 2 auxiliares (proteção/medicação) + SAMU" },
+    "edema-pulmao": { numero: 3, descricao: "Operador + auxiliar (O₂/medicação) + SAMU" },
+    "hipertermia-maligna": { numero: 4, descricao: "Operador + 2 auxiliares (resfriamento/medicação) + SAMU" },
+    "choque-hemorragico": { numero: 3, descricao: "Operador (controle do foco) + auxiliar (acesso/volume) + SAMU" },
+    tep: { numero: 3, descricao: "Operador + auxiliar (O₂/monitorização) + SAMU" },
+    "intoxicacao-anestesico": { numero: 3, descricao: "Operador + auxiliar (Intralipid/O₂) + SAMU" },
+    "obstrucao-via-aerea": { numero: 2, descricao: "Operador (Heimlich/RCP) + auxiliar para SAMU e DEA" },
+  };
+  if (overrides[e.id]) return overrides[e.id];
+
+  const map: Record<Severity, number> = { critica: 3, alta: 2, moderada: 2 };
+  const n = map[e.severidade];
+  return { numero: n, descricao: defaultDescricao(n) };
+}
+
+function defaultDescricao(n: number): string {
+  if (n >= 4) return "Equipe completa: líder, auxiliares e contato externo";
+  if (n === 3) return "Cirurgião-dentista + auxiliar + responsável por acionar SAMU";
+  if (n === 2) return "Cirurgião-dentista + auxiliar (ASB/TSB)";
+  return "Cirurgião-dentista";
+}
 
 export const emergencias: Emergency[] = [
   {

@@ -171,6 +171,7 @@ function Index() {
         <div className="max-w-6xl mx-auto px-5 py-8 text-xs text-muted-foreground">
           <p className="font-medium text-foreground mb-1">FAST-RESPONSE - Odontologia Santa Bárbara — Aviso clínico</p>
           <p>Este aplicativo é uma referência educacional. As condutas devem ser sempre ajustadas ao contexto clínico individual e seguir as diretrizes vigentes do CFO, AHA e protocolos institucionais.</p>
+          <p className="mt-3 text-foreground font-medium">Prof. Juliana Lance / Prof. Francisco Menezes</p>
         </div>
       </footer>
 

@@ -19,9 +19,9 @@ export function AppHeader() {
             <Stethoscope className="w-5 h-5" />
           </div>
           <div className="leading-tight">
-            <h1 className="font-semibold text-sm md:text-base">Fast-Response</h1>
+            <h1 className="font-semibold text-sm md:text-base">FAST-RESPONSE</h1>
             <p className="text-[10px] md:text-xs text-muted-foreground uppercase tracking-wider">
-              Odontologia Anhanguera
+              Odontologia Santa Bárbara
             </p>
           </div>
         </Link>

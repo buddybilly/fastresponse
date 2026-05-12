@@ -9,6 +9,7 @@ import {
 } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
+import { PwaProvider } from "../components/PwaProvider";
 
 function NotFoundComponent() {
   return (
@@ -72,6 +73,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { name: "theme-color", content: "#dc2626" },
+      { name: "apple-mobile-web-app-capable", content: "yes" },
+      { name: "apple-mobile-web-app-status-bar-style", content: "default" },
+      { name: "apple-mobile-web-app-title", content: "Resposta Rápida" },
       { title: "Lovable App" },
       { name: "description", content: "Dental SOS provides quick access to information on systemic emergencies in dentistry." },
       { name: "author", content: "Lovable" },
@@ -90,6 +95,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
+      { rel: "manifest", href: "/manifest.webmanifest" },
+      { rel: "apple-touch-icon", href: "/icon-192.png" },
+      { rel: "icon", href: "/icon-192.png", type: "image/png" },
     ],
   }),
   shellComponent: RootShell,
@@ -118,6 +126,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <Outlet />
+      <PwaProvider />
     </QueryClientProvider>
   );
 }

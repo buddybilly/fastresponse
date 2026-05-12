@@ -118,8 +118,11 @@ function Index() {
               >
                 <div className="text-xs font-medium text-destructive mb-1">{e.categoria}</div>
                 <div className="font-semibold text-sm leading-tight">{e.nome}</div>
-                <div className="mt-2 text-xs text-muted-foreground flex items-center gap-1 group-hover:text-destructive">
-                  Ver protocolo <ChevronRight className="w-3 h-3" />
+                <div className="mt-2 flex items-center justify-between gap-2">
+                  <TeamBadge n={equipeIdeal(e).numero} />
+                  <span className="text-xs text-muted-foreground flex items-center gap-1 group-hover:text-destructive">
+                    Abrir <ChevronRight className="w-3 h-3" />
+                  </span>
                 </div>
               </button>
             ))}

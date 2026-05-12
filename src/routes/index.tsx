@@ -1,13 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { Search, Phone, AlertTriangle, Activity, Stethoscope, Pill, ListChecks, X, ChevronRight } from "lucide-react";
+import {
+  Search, AlertTriangle, Activity, Pill, ListChecks, X, ChevronRight, Ban, Phone,
+} from "lucide-react";
 import { emergencias, categorias, type Emergency, type Severity } from "@/data/emergencies";
+import { AppHeader } from "@/components/AppHeader";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "OdontoEmergência — Urgências Sistêmicas no Consultório" },
-      { name: "description", content: "Guia rápido de condutas em urgências e emergências sistêmicas em odontologia: protocolos, sinais, medicamentos e doses." },
+      { title: "Fast-Response Odontologia Anhanguera — Urgências Sistêmicas" },
+      { name: "description", content: "Guia clínico de bolso para urgências e emergências sistêmicas no consultório odontológico: protocolos, sinais, condutas, medicamentos e o que NÃO fazer." },
     ],
   }),
   component: Index,
@@ -41,30 +44,8 @@ function Index() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      {/* Header */}
-      <header className="sticky top-0 z-30 backdrop-blur-md bg-background/80 border-b border-border">
-        <div className="max-w-6xl mx-auto px-5 py-4 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center text-primary-foreground" style={{ background: "var(--gradient-calm)" }}>
-              <Stethoscope className="w-5 h-5" />
-            </div>
-            <div>
-              <h1 className="font-semibold leading-tight">OdontoEmergência</h1>
-              <p className="text-xs text-muted-foreground">Guia clínico de bolso</p>
-            </div>
-          </div>
-          <a
-            href="tel:192"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-destructive-foreground font-semibold text-sm shadow-md hover:scale-[1.02] transition-transform"
-            style={{ background: "var(--gradient-emergency)", boxShadow: "var(--shadow-emergency)" }}
-          >
-            <Phone className="w-4 h-4" />
-            SAMU 192
-          </a>
-        </div>
-      </header>
+      <AppHeader />
 
-      {/* Hero */}
       <section className="max-w-6xl mx-auto px-5 pt-10 pb-8">
         <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-primary font-semibold mb-3">
           <Activity className="w-3.5 h-3.5" />
@@ -74,22 +55,20 @@ function Index() {
           Urgências e Emergências <span className="text-primary">Sistêmicas</span> em Odontologia
         </h2>
         <p className="mt-4 text-muted-foreground max-w-2xl">
-          Protocolos clínicos objetivos para reconhecimento, manejo inicial e medicação no consultório odontológico.
+          {emergencias.length} protocolos clínicos com sinais, condutas, medicamentos, doses e o que <strong className="text-destructive">NÃO fazer</strong> em cada situação.
         </p>
 
-        {/* Search */}
         <div className="mt-8 relative max-w-2xl">
           <Search className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" />
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Buscar por sintoma, nome ou categoria... (ex: dor torácica, anafilaxia)"
+            placeholder="Buscar por sintoma, nome ou categoria..."
             className="w-full pl-12 pr-4 py-4 rounded-xl bg-card border border-border focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all text-sm"
           />
         </div>
 
-        {/* Categories */}
         <div className="mt-5 flex flex-wrap gap-2">
           <button
             onClick={() => setCat(null)}
@@ -113,7 +92,6 @@ function Index() {
         </div>
       </section>
 
-      {/* Quick critical access */}
       {!query && !cat && (
         <section className="max-w-6xl mx-auto px-5 pb-8">
           <div className="flex items-center gap-2 mb-3">
@@ -138,7 +116,6 @@ function Index() {
         </section>
       )}
 
-      {/* List */}
       <section className="max-w-6xl mx-auto px-5 pb-20">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filtered.map((e) => {
@@ -158,7 +135,7 @@ function Index() {
                   </span>
                 </div>
                 <h4 className="font-semibold text-lg leading-tight mb-2">{e.nome}</h4>
-                <p className="text-sm text-muted-foreground line-clamp-2">{e.sinais[0]} · {e.sinais[1]}</p>
+                <p className="text-sm text-muted-foreground line-clamp-2">{e.sinais[0]}{e.sinais[1] ? ` · ${e.sinais[1]}` : ""}</p>
                 <div className="mt-4 pt-4 border-t border-border flex items-center justify-between text-xs">
                   <span className="text-muted-foreground flex items-center gap-1.5">
                     <ListChecks className="w-3.5 h-3.5" />
@@ -179,15 +156,13 @@ function Index() {
         )}
       </section>
 
-      {/* Footer */}
       <footer className="border-t border-border bg-card/50">
         <div className="max-w-6xl mx-auto px-5 py-8 text-xs text-muted-foreground">
-          <p className="font-medium text-foreground mb-1">Aviso clínico</p>
+          <p className="font-medium text-foreground mb-1">Fast-Response Odontologia Anhanguera — Aviso clínico</p>
           <p>Este aplicativo é uma referência educacional. As condutas devem ser sempre ajustadas ao contexto clínico individual e seguir as diretrizes vigentes do CFO, AHA e protocolos institucionais.</p>
         </div>
       </footer>
 
-      {/* Modal */}
       {selected && <ProtocolModal emergency={selected} onClose={() => setSelected(null)} />}
     </div>
   );
@@ -201,7 +176,6 @@ function ProtocolModal({ emergency, onClose }: { emergency: Emergency; onClose: 
         className="bg-card w-full md:max-w-2xl md:rounded-2xl rounded-t-2xl max-h-[92vh] overflow-y-auto border border-border shadow-2xl animate-in slide-in-from-bottom"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header */}
         <div className="sticky top-0 bg-card/95 backdrop-blur border-b border-border px-6 py-4 flex items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1.5">
@@ -219,7 +193,6 @@ function ProtocolModal({ emergency, onClose }: { emergency: Emergency; onClose: 
         </div>
 
         <div className="p-6 space-y-7">
-          {/* Sinais */}
           <section>
             <h4 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">
               <Activity className="w-4 h-4" /> Sinais e Sintomas
@@ -234,7 +207,6 @@ function ProtocolModal({ emergency, onClose }: { emergency: Emergency; onClose: 
             </ul>
           </section>
 
-          {/* Conduta */}
           <section>
             <h4 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">
               <ListChecks className="w-4 h-4" /> Conduta
@@ -251,7 +223,20 @@ function ProtocolModal({ emergency, onClose }: { emergency: Emergency; onClose: 
             </ol>
           </section>
 
-          {/* Medicamentos */}
+          <section className="p-4 rounded-xl bg-destructive/5 border border-destructive/20">
+            <h4 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-destructive mb-3">
+              <Ban className="w-4 h-4" /> O que NÃO fazer
+            </h4>
+            <ul className="space-y-2">
+              {emergency.naoFazer.map((n, i) => (
+                <li key={i} className="flex items-start gap-2.5 text-sm">
+                  <Ban className="w-3.5 h-3.5 text-destructive mt-0.5 shrink-0" />
+                  <span>{n}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+
           {emergency.medicamentos.length > 0 && (
             <section>
               <h4 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">
@@ -271,20 +256,18 @@ function ProtocolModal({ emergency, onClose }: { emergency: Emergency; onClose: 
             </section>
           )}
 
-          {/* Observações */}
           {emergency.observacoes && (
             <section className="p-4 rounded-xl bg-warning/10 border border-warning/30">
               <div className="flex items-start gap-3">
                 <AlertTriangle className="w-5 h-5 text-warning shrink-0 mt-0.5" />
                 <div>
-                  <div className="text-xs font-semibold uppercase tracking-wider text-warning-foreground mb-1">Atenção</div>
+                  <div className="text-xs font-semibold uppercase tracking-wider mb-1">Atenção</div>
                   <p className="text-sm">{emergency.observacoes}</p>
                 </div>
               </div>
             </section>
           )}
 
-          {/* SAMU CTA */}
           {emergency.severidade === "critica" && (
             <a
               href="tel:192"

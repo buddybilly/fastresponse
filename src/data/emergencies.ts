@@ -7,6 +7,7 @@ export type Emergency = {
   severidade: Severity;
   sinais: string[];
   conduta: string[];
+  naoFazer: string[];
   medicamentos: { nome: string; dose: string; via: string }[];
   observacoes?: string;
 };
@@ -17,12 +18,7 @@ export const emergencias: Emergency[] = [
     nome: "Síncope Vasovagal",
     categoria: "Cardiovascular",
     severidade: "moderada",
-    sinais: [
-      "Palidez, sudorese fria",
-      "Náusea, tontura",
-      "Bradicardia, hipotensão",
-      "Perda transitória da consciência",
-    ],
+    sinais: ["Palidez, sudorese fria", "Náusea, tontura", "Bradicardia, hipotensão", "Perda transitória da consciência"],
     conduta: [
       "Interromper o procedimento imediatamente",
       "Posição de Trendelenburg (decúbito dorsal com pernas elevadas)",
@@ -31,9 +27,13 @@ export const emergencias: Emergency[] = [
       "Monitorar PA, FC e nível de consciência",
       "Recuperação geralmente em 1–2 minutos",
     ],
-    medicamentos: [
-      { nome: "Oxigênio", dose: "5 L/min", via: "Máscara facial" },
+    naoFazer: [
+      "NÃO sentar ou levantar o paciente abruptamente",
+      "NÃO oferecer líquidos VO se inconsciente",
+      "NÃO tapear o rosto ou usar amônia agressivamente",
+      "NÃO aplicar adrenalina (pode agravar bradicardia)",
     ],
+    medicamentos: [{ nome: "Oxigênio", dose: "5 L/min", via: "Máscara facial" }],
     observacoes: "Se não recuperar em 2 min, considerar outras causas e acionar SAMU 192.",
   },
   {
@@ -56,6 +56,12 @@ export const emergencias: Emergency[] = [
       "Repetir adrenalina a cada 5–15 min se necessário",
       "Monitorar sinais vitais continuamente",
       "RCP se houver parada cardiorrespiratória",
+    ],
+    naoFazer: [
+      "NÃO atrasar a adrenalina para administrar anti-histamínico antes",
+      "NÃO usar adrenalina por via IV em bolus (risco de arritmia/IAM)",
+      "NÃO colocar o paciente sentado ou em pé (risco de morte súbita)",
+      "NÃO dar líquidos VO se houver edema de glote",
     ],
     medicamentos: [
       { nome: "Adrenalina 1:1000", dose: "0,3–0,5 mg (0,01 mg/kg)", via: "IM (vasto lateral)" },
@@ -84,10 +90,41 @@ export const emergencias: Emergency[] = [
       "Reavaliar glicemia em 15 minutos",
       "Acionar SAMU 192 se não houver recuperação",
     ],
+    naoFazer: [
+      "NÃO oferecer açúcar/líquidos a paciente inconsciente (broncoaspiração)",
+      "NÃO usar insulina por engano",
+      "NÃO liberar o paciente sem reavaliação da glicemia",
+    ],
     medicamentos: [
       { nome: "Glicose 50%", dose: "20–50 mL", via: "IV" },
       { nome: "Glucagon", dose: "1 mg", via: "IM/SC" },
     ],
+  },
+  {
+    id: "hiperglicemia",
+    nome: "Hiperglicemia / Cetoacidose Diabética",
+    categoria: "Endócrina",
+    severidade: "alta",
+    sinais: [
+      "Poliúria, polidipsia, polifagia",
+      "Hálito cetônico (frutado)",
+      "Respiração de Kussmaul (rápida e profunda)",
+      "Náusea, vômito, dor abdominal",
+      "Glicemia > 250 mg/dL, desidratação",
+    ],
+    conduta: [
+      "Interromper o procedimento",
+      "Aferir glicemia capilar",
+      "Hidratação VO se consciente (soro fisiológico se IV disponível)",
+      "Manter vias aéreas pérvias",
+      "Acionar SAMU 192 / encaminhar para emergência hospitalar",
+    ],
+    naoFazer: [
+      "NÃO administrar insulina sem confirmação laboratorial e sem suporte hospitalar",
+      "NÃO oferecer alimentos ou bebidas açucaradas",
+      "NÃO continuar procedimento eletivo",
+    ],
+    medicamentos: [],
   },
   {
     id: "crise-hipertensiva",
@@ -109,10 +146,36 @@ export const emergencias: Emergency[] = [
       "Oxigênio se houver desconforto",
       "Acionar SAMU 192 em caso de emergência hipertensiva (lesão de órgão-alvo)",
     ],
-    medicamentos: [
-      { nome: "Captopril", dose: "25 mg", via: "Sublingual" },
+    naoFazer: [
+      "NÃO usar nifedipino sublingual (risco de queda abrupta da PA, AVC)",
+      "NÃO tentar reduzir a PA muito rápido",
+      "NÃO liberar o paciente sem reavaliação",
     ],
+    medicamentos: [{ nome: "Captopril", dose: "25 mg", via: "Sublingual" }],
     observacoes: "NÃO usar nifedipino sublingual (risco de queda abrupta da PA).",
+  },
+  {
+    id: "hipotensao",
+    nome: "Hipotensão Postural",
+    categoria: "Cardiovascular",
+    severidade: "moderada",
+    sinais: [
+      "Queda PA sistólica ≥ 20 mmHg ao levantar",
+      "Tontura, escurecimento visual",
+      "Fraqueza, pré-síncope",
+      "Taquicardia reflexa",
+    ],
+    conduta: [
+      "Reclinar o paciente em Trendelenburg",
+      "Elevar membros inferiores",
+      "Hidratação VO se consciente",
+      "Levantar lentamente após melhora",
+    ],
+    naoFazer: [
+      "NÃO levantar o paciente bruscamente da cadeira",
+      "NÃO administrar anti-hipertensivos",
+    ],
+    medicamentos: [],
   },
   {
     id: "iam",
@@ -134,11 +197,70 @@ export const emergencias: Emergency[] = [
       "Posição confortável (geralmente sentado)",
       "Preparar para RCP",
     ],
+    naoFazer: [
+      "NÃO administrar nitrato se PAS < 100 mmHg ou uso de inibidor PDE-5 (sildenafila)",
+      "NÃO deitar totalmente o paciente se houver dispneia",
+      "NÃO oferecer alimentos ou líquidos",
+      "NÃO permitir esforço físico (paciente não deve caminhar)",
+    ],
     medicamentos: [
       { nome: "AAS", dose: "200–300 mg (mastigar)", via: "VO" },
       { nome: "Isordil (dinitrato)", dose: "5 mg", via: "Sublingual" },
       { nome: "Oxigênio", dose: "2–4 L/min", via: "Cateter nasal" },
     ],
+  },
+  {
+    id: "angina",
+    nome: "Angina Pectoris",
+    categoria: "Cardiovascular",
+    severidade: "alta",
+    sinais: [
+      "Dor torácica em aperto < 20 min",
+      "Desencadeada por estresse/esforço",
+      "Alívio com repouso ou nitrato",
+      "Pode irradiar para braço E ou mandíbula",
+    ],
+    conduta: [
+      "Interromper o procedimento",
+      "Posicionar paciente sentado e tranquilizá-lo",
+      "Nitrato sublingual (até 3 doses, intervalo 5 min)",
+      "Oxigênio 2–4 L/min se desconforto",
+      "Se dor não cede em 15 min → tratar como IAM",
+    ],
+    naoFazer: [
+      "NÃO usar nitrato com sildenafila/tadalafila nas últimas 24–48h",
+      "NÃO continuar procedimento odontológico",
+    ],
+    medicamentos: [{ nome: "Isordil (dinitrato)", dose: "5 mg (até 3x)", via: "Sublingual" }],
+  },
+  {
+    id: "avc",
+    nome: "Acidente Vascular Cerebral (AVC)",
+    categoria: "Neurológica",
+    severidade: "critica",
+    sinais: [
+      "SAMU: Sorriso assimétrico, fraqueza no Abraço, Música/fala alterada, Urgência",
+      "Hemiparesia/hemiplegia súbita",
+      "Afasia ou disartria",
+      "Desvio de rima labial",
+      "Cefaleia súbita intensa, alteração de consciência",
+    ],
+    conduta: [
+      "ACIONAR SAMU 192 IMEDIATAMENTE (janela terapêutica de 4,5h)",
+      "Anotar horário exato do início dos sintomas",
+      "Decúbito dorsal com cabeceira a 30°",
+      "Manter vias aéreas pérvias",
+      "Oxigênio se SpO₂ < 94%",
+      "Monitorar PA, FC, glicemia",
+    ],
+    naoFazer: [
+      "NÃO administrar AAS ou anticoagulante (pode ser AVC hemorrágico)",
+      "NÃO baixar a PA agressivamente",
+      "NÃO oferecer nada VO (risco de broncoaspiração)",
+      "NÃO atrasar o transporte hospitalar",
+    ],
+    medicamentos: [],
+    observacoes: "Tempo é cérebro. Cada minuto = 1,9 milhão de neurônios perdidos.",
   },
   {
     id: "convulsao",
@@ -160,6 +282,12 @@ export const emergencias: Emergency[] = [
       "Cronometrar a crise (>5 min = estado de mal epiléptico)",
       "Diazepam 10 mg IV se prolongada",
       "Acionar SAMU 192",
+    ],
+    naoFazer: [
+      "NÃO colocar dedos, gaze ou objetos na boca",
+      "NÃO conter os movimentos com força",
+      "NÃO oferecer água ou medicação VO durante a crise",
+      "NÃO deixar o paciente sozinho",
     ],
     medicamentos: [
       { nome: "Diazepam", dose: "10 mg", via: "IV lento" },
@@ -187,6 +315,12 @@ export const emergencias: Emergency[] = [
       "Hidrocortisona IV em casos moderados/graves",
       "Acionar SAMU 192 se não responder",
     ],
+    naoFazer: [
+      "NÃO deitar o paciente em decúbito dorsal",
+      "NÃO usar betabloqueador (piora o broncoespasmo)",
+      "NÃO usar AINEs em asmáticos sensíveis (AAS)",
+      "NÃO sedar o paciente",
+    ],
     medicamentos: [
       { nome: "Salbutamol spray", dose: "4–8 jatos", via: "Inalatória" },
       { nome: "Hidrocortisona", dose: "100–200 mg", via: "IV" },
@@ -211,9 +345,12 @@ export const emergencias: Emergency[] = [
       "NÃO administrar oxigênio",
       "Considerar benzodiazepínico se ansiedade intensa",
     ],
-    medicamentos: [
-      { nome: "Midazolam", dose: "7,5–15 mg", via: "VO" },
+    naoFazer: [
+      "NÃO administrar oxigênio (agrava a alcalose respiratória)",
+      "NÃO usar saco plástico (risco de asfixia)",
+      "NÃO subestimar — diferenciar de causas orgânicas",
     ],
+    medicamentos: [{ nome: "Midazolam", dose: "7,5–15 mg", via: "VO" }],
   },
   {
     id: "obstrucao-via-aerea",
@@ -233,6 +370,11 @@ export const emergencias: Emergency[] = [
       "Inspecionar boca a cada ciclo (remover se visível)",
       "ACIONAR SAMU 192",
     ],
+    naoFazer: [
+      "NÃO realizar varredura digital às cegas",
+      "NÃO dar tapas nas costas em paciente em pé com obstrução total",
+      "NÃO oferecer água",
+    ],
     medicamentos: [],
     observacoes: "Prevenção: uso de dique de borracha sempre que possível.",
   },
@@ -241,11 +383,7 @@ export const emergencias: Emergency[] = [
     nome: "Parada Cardiorrespiratória (PCR)",
     categoria: "Cardiovascular",
     severidade: "critica",
-    sinais: [
-      "Inconsciência",
-      "Ausência de respiração ou gasping",
-      "Ausência de pulso central (carotídeo)",
-    ],
+    sinais: ["Inconsciência", "Ausência de respiração ou gasping", "Ausência de pulso central (carotídeo)"],
     conduta: [
       "ACIONAR SAMU 192 e solicitar DEA",
       "Iniciar RCP: 30 compressões / 2 ventilações",
@@ -254,10 +392,188 @@ export const emergencias: Emergency[] = [
       "Aplicar DEA assim que disponível e seguir orientações",
       "Manter RCP até chegada do socorro ou retorno da circulação",
     ],
-    medicamentos: [
-      { nome: "Adrenalina", dose: "1 mg a cada 3–5 min", via: "IV (suporte avançado)" },
+    naoFazer: [
+      "NÃO interromper as compressões por mais de 10 segundos",
+      "NÃO ventilar excessivamente (hiperventilação reduz retorno venoso)",
+      "NÃO atrasar o uso do DEA",
+      "NÃO checar pulso por mais de 10 segundos",
     ],
+    medicamentos: [{ nome: "Adrenalina", dose: "1 mg a cada 3–5 min", via: "IV (suporte avançado)" }],
     observacoes: "Cadeia de sobrevivência: reconhecimento precoce → RCP → desfibrilação → SAV.",
+  },
+  {
+    id: "intoxicacao-anestesico",
+    nome: "Intoxicação por Anestésico Local",
+    categoria: "Toxicológica",
+    severidade: "critica",
+    sinais: [
+      "SNC: gosto metálico, parestesia perioral, zumbido, agitação, convulsão, coma",
+      "CV: hipertensão e taquicardia inicial → hipotensão, bradicardia, arritmia, PCR",
+      "Geralmente após injeção intravascular acidental ou dose excessiva",
+    ],
+    conduta: [
+      "Interromper imediatamente a administração",
+      "Solicitar ajuda / SAMU 192",
+      "Manter vias aéreas, O₂ 100%",
+      "Tratar convulsão com benzodiazepínico (midazolam)",
+      "Emulsão lipídica 20% IV se disponível (Intralipid 1,5 mL/kg em bolus)",
+      "RCP se PCR — pode ser prolongada",
+    ],
+    naoFazer: [
+      "NÃO usar lidocaína como antiarrítmico",
+      "NÃO usar vasopressina ou betabloqueador",
+      "NÃO usar adrenalina em altas doses (preferir < 1 µg/kg)",
+      "NÃO administrar bloqueador de canal de cálcio",
+    ],
+    medicamentos: [
+      { nome: "Midazolam", dose: "5–10 mg", via: "IV/IM" },
+      { nome: "Emulsão lipídica 20%", dose: "1,5 mL/kg bolus + 0,25 mL/kg/min", via: "IV" },
+    ],
+    observacoes: "Sempre aspirar antes de injetar anestésico. Respeitar dose máxima por kg.",
+  },
+  {
+    id: "reacao-vasoconstritor",
+    nome: "Reação ao Vasoconstritor (Adrenalina)",
+    categoria: "Toxicológica",
+    severidade: "moderada",
+    sinais: [
+      "Palpitações, taquicardia",
+      "Tremor, ansiedade, palidez",
+      "Cefaleia, sudorese",
+      "Hipertensão transitória",
+    ],
+    conduta: [
+      "Interromper o procedimento",
+      "Tranquilizar o paciente",
+      "Posição sentada/reclinada",
+      "Monitorar PA e FC",
+      "Geralmente autolimitada em poucos minutos",
+    ],
+    naoFazer: [
+      "NÃO administrar betabloqueador (risco de hipertensão paradoxal)",
+      "NÃO confundir com anafilaxia",
+    ],
+    medicamentos: [],
+  },
+  {
+    id: "aspiracao",
+    nome: "Aspiração / Deglutição de Corpo Estranho",
+    categoria: "Respiratória",
+    severidade: "alta",
+    sinais: [
+      "Tosse súbita durante o procedimento",
+      "Engasgo, dispneia",
+      "Sibilos unilaterais (se aspirado)",
+      "Pode ser assintomático (deglutido)",
+    ],
+    conduta: [
+      "Interromper imediatamente",
+      "Estimular tosse se via aérea pérvia",
+      "Inspeção visual da cavidade oral",
+      "Encaminhar para Rx de tórax e abdome",
+      "Consulta com pneumologia/gastro conforme localização",
+    ],
+    naoFazer: [
+      "NÃO liberar o paciente sem confirmação radiológica",
+      "NÃO induzir vômito",
+      "NÃO realizar varredura digital às cegas",
+    ],
+    medicamentos: [],
+    observacoes: "Prevenção: dique de borracha, fio dental em peças pequenas, gaze de proteção.",
+  },
+  {
+    id: "edema-angioneurotico",
+    nome: "Edema Angioneurótico",
+    categoria: "Alérgica",
+    severidade: "alta",
+    sinais: [
+      "Edema súbito de lábios, língua, face",
+      "Pode envolver glote (estridor, dispneia)",
+      "Geralmente sem urticária associada",
+      "Comum em uso de IECA",
+    ],
+    conduta: [
+      "Suspender procedimento e medicação suspeita",
+      "Avaliar via aérea — se comprometida, tratar como anafilaxia",
+      "Adrenalina IM se sinais de obstrução",
+      "Corticoide e anti-histamínico",
+      "Acionar SAMU 192 se envolvimento de glote",
+    ],
+    naoFazer: [
+      "NÃO subestimar edema lingual/glótico",
+      "NÃO retomar uso de IECA suspeito",
+    ],
+    medicamentos: [
+      { nome: "Adrenalina 1:1000", dose: "0,3–0,5 mg", via: "IM" },
+      { nome: "Hidrocortisona", dose: "100–200 mg", via: "IV/IM" },
+    ],
+  },
+  {
+    id: "crise-tireotoxica",
+    nome: "Crise Tireotóxica",
+    categoria: "Endócrina",
+    severidade: "critica",
+    sinais: [
+      "Taquicardia intensa (FC > 140 bpm)",
+      "Hipertermia (> 38,5°C)",
+      "Agitação, delirium, tremor",
+      "Náusea, vômito, diarreia",
+      "Pode evoluir com IC e coma",
+    ],
+    conduta: [
+      "Interromper procedimento",
+      "Resfriamento físico",
+      "Hidratação venosa",
+      "Acionar SAMU 192 / encaminhamento hospitalar urgente",
+    ],
+    naoFazer: [
+      "NÃO usar AAS (deslocamento de hormônios da TBG)",
+      "NÃO administrar epinefrina/vasoconstritor adrenérgico",
+    ],
+    medicamentos: [],
+  },
+  {
+    id: "insuf-adrenal",
+    nome: "Insuficiência Adrenal Aguda",
+    categoria: "Endócrina",
+    severidade: "critica",
+    sinais: [
+      "Hipotensão refratária",
+      "Fraqueza intensa, náusea, vômito",
+      "Hipoglicemia, hiponatremia",
+      "Comum em pacientes em corticoterapia crônica",
+    ],
+    conduta: [
+      "Decúbito com MMII elevados",
+      "Hidrocortisona 100 mg IV/IM imediatamente",
+      "Hidratação com soro fisiológico",
+      "Glicose se hipoglicemia",
+      "Acionar SAMU 192",
+    ],
+    naoFazer: [
+      "NÃO suspender corticoide crônico abruptamente",
+      "NÃO retardar a administração do corticoide",
+    ],
+    medicamentos: [{ nome: "Hidrocortisona", dose: "100 mg", via: "IV/IM" }],
+  },
+  {
+    id: "epistaxe",
+    nome: "Epistaxe",
+    categoria: "Otorrinolaringológica",
+    severidade: "moderada",
+    sinais: ["Sangramento nasal anterior ou posterior", "Pode ser desencadeada por hipertensão"],
+    conduta: [
+      "Posição sentada, cabeça inclinada para frente",
+      "Compressão digital da asa nasal por 10–15 min",
+      "Aplicar gelo na região nasal",
+      "Aferir PA e tratar se elevada",
+      "Encaminhar ao otorrino se persistente",
+    ],
+    naoFazer: [
+      "NÃO inclinar a cabeça para trás (broncoaspiração)",
+      "NÃO assoar o nariz após cessar",
+    ],
+    medicamentos: [],
   },
 ];
 

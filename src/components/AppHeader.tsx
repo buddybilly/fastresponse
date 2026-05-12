@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Phone, Stethoscope, BookOpen, Syringe } from "lucide-react";
+import { Phone, HeartPulse, BookOpen, Syringe } from "lucide-react";
 
 export function AppHeader() {
   const path = useRouterState({ select: (s) => s.location.pathname });
@@ -16,7 +16,7 @@ export function AppHeader() {
             className="w-10 h-10 rounded-xl flex items-center justify-center text-primary-foreground shrink-0"
             style={{ background: "var(--gradient-calm)" }}
           >
-            <Stethoscope className="w-5 h-5" />
+            <HeartPulse className="w-5 h-5" />
           </div>
           <div className="leading-tight">
             <h1 className="font-semibold text-sm md:text-base">FAST-RESPONSE</h1>

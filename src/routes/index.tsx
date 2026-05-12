@@ -178,6 +178,7 @@ function Index() {
 
 function ProtocolModal({ emergency, onClose }: { emergency: Emergency; onClose: () => void }) {
   const sev = severityStyle[emergency.severidade];
+  const equipe = equipeIdeal(emergency);
   return (
     <div className="fixed inset-0 z-50 flex items-end md:items-center justify-center bg-foreground/40 backdrop-blur-sm p-0 md:p-6 animate-in fade-in" onClick={onClose}>
       <div
@@ -201,6 +202,31 @@ function ProtocolModal({ emergency, onClose }: { emergency: Emergency; onClose: 
         </div>
 
         <div className="p-6 space-y-7">
+          {/* Equipe ideal */}
+          <section className="p-4 rounded-xl bg-primary/5 border border-primary/20">
+            <div className="flex items-center justify-between gap-4 flex-wrap">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-primary text-primary-foreground flex items-center justify-center shrink-0">
+                  <Users className="w-5 h-5" />
+                </div>
+                <div>
+                  <div className="text-xs font-semibold uppercase tracking-wider text-primary">Equipe ideal</div>
+                  <div className="text-sm font-semibold leading-tight">
+                    {equipe.numero} {equipe.numero === 1 ? "pessoa" : "pessoas"}
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-center gap-1">
+                {Array.from({ length: equipe.numero }).map((_, i) => (
+                  <div key={i} className="w-9 h-9 rounded-full bg-primary/15 border border-primary/30 flex items-center justify-center">
+                    <User className="w-4 h-4 text-primary" />
+                  </div>
+                ))}
+              </div>
+            </div>
+            <p className="text-xs text-muted-foreground mt-3 leading-relaxed">{equipe.descricao}</p>
+          </section>
+
           <section>
             <h4 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">
               <Activity className="w-4 h-4" /> Sinais e Sintomas

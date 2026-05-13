@@ -1,5 +1,7 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Phone, HeartPulse, BookOpen, Syringe } from "lucide-react";
+import { Phone, BookOpen, Syringe } from "lucide-react";
+import logoLiga from "@/assets/logo-liga.png";
+import logoAnhanguera from "@/assets/logo-anhanguera.png";
 
 export function AppHeader() {
   const path = useRouterState({ select: (s) => s.location.pathname });
@@ -12,12 +14,8 @@ export function AppHeader() {
     <header className="sticky top-0 z-30 backdrop-blur-md bg-background/85 border-b border-border">
       <div className="max-w-6xl mx-auto px-5 py-3 flex items-center justify-between gap-4">
         <Link to="/" className="flex items-center gap-3 group">
-          <div
-            className="w-10 h-10 rounded-xl flex items-center justify-center text-primary-foreground shrink-0"
-            style={{ background: "var(--gradient-calm)" }}
-          >
-            <HeartPulse className="w-5 h-5" />
-          </div>
+          <img src={logoLiga} alt="Liga Acadêmica de Cirurgia e Traumatologia Bucomaxilofaciais" className="w-11 h-11 rounded-full object-cover shrink-0 ring-1 ring-border" />
+          <img src={logoAnhanguera} alt="Anhanguera Santa Bárbara D'Oeste" className="hidden sm:block h-9 w-auto shrink-0" />
           <div className="leading-tight">
             <h1 className="font-semibold text-sm md:text-base">FAST-RESPONSE</h1>
             <p className="text-[10px] md:text-xs text-muted-foreground uppercase tracking-wider">

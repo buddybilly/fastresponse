@@ -5,6 +5,8 @@ import {
 } from "lucide-react";
 import { emergencias, categorias, equipeIdeal, type Emergency, type Severity } from "@/data/emergencies";
 import { AppHeader } from "@/components/AppHeader";
+import logoLiga from "@/assets/logo-liga.png";
+import logoAnhanguera from "@/assets/logo-anhanguera.png";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -169,6 +171,10 @@ function Index() {
 
       <footer className="border-t border-border bg-card/50">
         <div className="max-w-6xl mx-auto px-5 py-8 text-xs text-muted-foreground">
+          <div className="flex items-center gap-5 mb-5">
+            <img src={logoLiga} alt="Liga Acadêmica de Cirurgia e Traumatologia Bucomaxilofaciais" className="h-16 w-16 rounded-full object-cover ring-1 ring-border" />
+            <img src={logoAnhanguera} alt="Anhanguera Santa Bárbara D'Oeste" className="h-12 w-auto" />
+          </div>
           <p className="font-medium text-foreground mb-1">FAST-RESPONSE - Odontologia Santa Bárbara — Aviso clínico</p>
           <p>Este aplicativo é uma referência educacional. As condutas devem ser sempre ajustadas ao contexto clínico individual e seguir as diretrizes vigentes do CFO, AHA e protocolos institucionais.</p>
           <p className="mt-3 text-foreground font-medium">Prof. Juliana Lance / Prof. Francisco Menezes</p>

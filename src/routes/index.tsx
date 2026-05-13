@@ -7,6 +7,7 @@ import { emergencias, categorias, equipeIdeal, type Emergency, type Severity } f
 import { AppHeader } from "@/components/AppHeader";
 import logoLiga from "@/assets/logo-liga.png";
 import logoAnhanguera from "@/assets/logo-anhanguera.png";
+import watermark from "@/assets/watermark-fast-response.png";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -56,7 +57,18 @@ function Index() {
   const criticos = emergencias.filter((e) => e.severidade === "critica");
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div
+      className="min-h-screen bg-background text-foreground relative"
+      style={{
+        backgroundImage: `url(${watermark})`,
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center 30%",
+        backgroundSize: "min(680px, 85%)",
+        backgroundAttachment: "fixed",
+      }}
+    >
+      <div aria-hidden className="pointer-events-none fixed inset-0 bg-background/85 -z-0" />
+      <div className="relative z-10">
       <AppHeader />
 
       <section className="max-w-6xl mx-auto px-5 pt-10 pb-8">
@@ -182,6 +194,7 @@ function Index() {
       </footer>
 
       {selected && <ProtocolModal emergency={selected} onClose={() => setSelected(null)} />}
+      </div>
     </div>
   );
 }

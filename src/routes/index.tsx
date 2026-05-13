@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Search, AlertTriangle, Activity, Pill, ListChecks, X, ChevronRight, Ban, Phone, User, Users,
 } from "lucide-react";
@@ -40,6 +40,12 @@ function Index() {
   const [query, setQuery] = useState("");
   const [cat, setCat] = useState<string | null>(null);
   const [selected, setSelected] = useState<Emergency | null>(null);
+  const [showSplash, setShowSplash] = useState(true);
+
+  useEffect(() => {
+    const t = setTimeout(() => setShowSplash(false), 2800);
+    return () => clearTimeout(t);
+  }, []);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -57,6 +63,24 @@ function Index() {
   const criticos = emergencias.filter((e) => e.severidade === "critica");
 
   return (
+    <>
+    {showSplash && (
+      <div
+        onClick={() => setShowSplash(false)}
+        className="fixed inset-0 z-[100] flex flex-col items-center justify-center gap-8 bg-background animate-in fade-in cursor-pointer px-6"
+      >
+        <img
+          src={watermark}
+          alt="FAST-RESPONSE TEAM — Odontologia S.B.O."
+          className="w-full max-w-md object-contain"
+        />
+        <div className="flex items-center gap-6">
+          <img src={logoLiga} alt="Liga Acadêmica" className="h-20 w-20 rounded-full object-cover ring-1 ring-border" />
+          <img src={logoAnhanguera} alt="Anhanguera Santa Bárbara D'Oeste" className="h-14 w-auto" />
+        </div>
+        <p className="text-xs text-muted-foreground tracking-wide uppercase">Toque para continuar</p>
+      </div>
+    )}
     <div
       className="min-h-screen bg-background text-foreground relative"
       style={{
@@ -196,6 +220,7 @@ function Index() {
       {selected && <ProtocolModal emergency={selected} onClose={() => setSelected(null)} />}
       </div>
     </div>
+    </>
   );
 }
 

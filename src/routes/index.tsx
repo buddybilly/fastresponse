@@ -220,6 +220,7 @@ function Index() {
       {selected && <ProtocolModal emergency={selected} onClose={() => setSelected(null)} />}
       </div>
     </div>
+    </>
   );
 }
 

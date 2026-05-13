@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Phone, HeartPulse, BookOpen, Syringe } from "lucide-react";
+import { Phone, BookOpen, Syringe } from "lucide-react";
 import logoLiga from "@/assets/logo-liga.png";
 import logoAnhanguera from "@/assets/logo-anhanguera.png";
 

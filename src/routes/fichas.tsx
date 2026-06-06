@@ -1,0 +1,304 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { Printer, Activity, ListChecks, Ban, Pill, AlertTriangle, Users, Phone } from "lucide-react";
+import { emergencias, equipeIdeal, type Severity } from "@/data/emergencies";
+import { AppHeader } from "@/components/AppHeader";
+import logoLiga from "@/assets/logo-liga.png";
+import logoAnhanguera from "@/assets/logo-anhanguera.png";
+
+export const Route = createFileRoute("/fichas")({
+  head: () => ({
+    meta: [
+      { title: "Book de Fichas — FAST-RESPONSE Odontologia S.B.O." },
+      { name: "description", content: "Book de acesso rápido com todas as fichas de urgências e emergências sistêmicas em odontologia, formatadas para impressão A4." },
+    ],
+  }),
+  component: FichasPage,
+});
+
+const sevLabel: Record<Severity, string> = {
+  critica: "CRÍTICA",
+  alta: "ALTA",
+  moderada: "MODERADA",
+};
+
+const sevPrintColor: Record<Severity, string> = {
+  critica: "#c0392b",
+  alta: "#d68910",
+  moderada: "#1e8449",
+};
+
+function FichasPage() {
+  return (
+    <div className="min-h-screen bg-background text-foreground">
+      <div className="print:hidden">
+        <AppHeader />
+      </div>
+
+      <section className="max-w-5xl mx-auto px-5 pt-8 pb-6 print:hidden">
+        <div className="flex items-start justify-between gap-4 flex-wrap">
+          <div>
+            <div className="text-xs uppercase tracking-widest text-primary font-semibold mb-2">
+              Acesso rápido — referência impressa
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
+              Book de <span className="text-primary">Fichas Clínicas</span>
+            </h2>
+            <p className="mt-3 text-muted-foreground max-w-2xl text-sm">
+              {emergencias.length} fichas de bolso — uma por página A4. Use o botão abaixo para imprimir
+              o book completo ou salvar como PDF (selecione "Salvar como PDF" no diálogo de impressão).
+            </p>
+          </div>
+          <button
+            onClick={() => window.print()}
+            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-primary text-primary-foreground font-semibold text-sm hover:opacity-90 transition-opacity"
+          >
+            <Printer className="w-4 h-4" /> Imprimir book / Salvar PDF
+          </button>
+        </div>
+      </section>
+
+      <main className="max-w-5xl mx-auto px-5 pb-20 print:p-0 print:max-w-none">
+        {/* Capa */}
+        <article className="ficha-page cover-page">
+          <div className="flex flex-col items-center justify-center text-center h-full gap-8">
+            <img src={logoLiga} alt="Liga Acadêmica" className="w-32 h-32 rounded-full object-cover" />
+            <div>
+              <div className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">FAST-RESPONSE</div>
+              <h1 className="text-4xl font-bold tracking-tight leading-tight">
+                Book de Fichas Clínicas
+              </h1>
+              <p className="text-lg mt-3 text-muted-foreground">
+                Urgências e Emergências Sistêmicas em Odontologia
+              </p>
+            </div>
+            <div className="text-sm text-foreground/80 max-w-md">
+              {emergencias.length} protocolos de bolso · Sinais · Conduta · Medicamentos · O que NÃO fazer
+            </div>
+            <div className="mt-auto pt-8 flex flex-col items-center gap-4">
+              <img src={logoAnhanguera} alt="Anhanguera" className="h-14 w-auto" />
+              <p className="text-sm font-semibold">Prof. Juliana Lance / Prof. Francisco Menezes</p>
+              <p className="text-xs text-muted-foreground">Odontologia Santa Bárbara D'Oeste</p>
+            </div>
+          </div>
+        </article>
+
+        {/* Índice */}
+        <article className="ficha-page">
+          <FichaHeader title="Índice" subtitle="Sumário das fichas" />
+          <ol className="mt-6 space-y-1.5 text-sm columns-2 gap-8">
+            {emergencias.map((e, i) => (
+              <li key={e.id} className="break-inside-avoid flex justify-between gap-3 py-1 border-b border-dashed border-border">
+                <span>
+                  <span className="font-semibold mr-2">{String(i + 1).padStart(2, "0")}.</span>
+                  {e.nome}
+                </span>
+                <span
+                  className="text-[10px] font-bold uppercase tracking-wider shrink-0"
+                  style={{ color: sevPrintColor[e.severidade] }}
+                >
+                  {sevLabel[e.severidade]}
+                </span>
+              </li>
+            ))}
+          </ol>
+          <FichaFooter />
+        </article>
+
+        {/* Uma ficha por página */}
+        {emergencias.map((e, i) => {
+          const equipe = equipeIdeal(e);
+          return (
+            <article key={e.id} className="ficha-page">
+              <FichaHeader
+                title={e.nome}
+                subtitle={e.categoria}
+                badge={sevLabel[e.severidade]}
+                badgeColor={sevPrintColor[e.severidade]}
+                index={i + 1}
+              />
+
+              <div className="mt-5 flex items-center gap-3 p-3 rounded-lg border border-border bg-secondary/40">
+                <Users className="w-4 h-4 text-primary shrink-0" />
+                <div className="text-sm">
+                  <span className="font-semibold">Equipe ideal: {equipe.numero} {equipe.numero === 1 ? "pessoa" : "pessoas"}</span>
+                  <span className="text-muted-foreground"> — {equipe.descricao}</span>
+                </div>
+              </div>
+
+              <div className="mt-5 grid grid-cols-2 gap-5">
+                <Section icon={<Activity className="w-3.5 h-3.5" />} title="Sinais e Sintomas">
+                  <ul className="space-y-1.5">
+                    {e.sinais.map((s, idx) => (
+                      <li key={idx} className="flex gap-2 text-sm">
+                        <span className="text-primary font-bold shrink-0">·</span>
+                        <span>{s}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </Section>
+
+                <Section icon={<Ban className="w-3.5 h-3.5" />} title="O que NÃO fazer" danger>
+                  <ul className="space-y-1.5">
+                    {e.naoFazer.map((n, idx) => (
+                      <li key={idx} className="flex gap-2 text-sm">
+                        <Ban className="w-3 h-3 mt-1 shrink-0" style={{ color: "#c0392b" }} />
+                        <span>{n}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </Section>
+              </div>
+
+              <div className="mt-5">
+                <Section icon={<ListChecks className="w-3.5 h-3.5" />} title="Conduta — passo a passo">
+                  <ol className="space-y-1.5">
+                    {e.conduta.map((c, idx) => (
+                      <li key={idx} className="flex gap-2.5 text-sm">
+                        <span className="shrink-0 w-5 h-5 rounded-full bg-primary text-primary-foreground text-[10px] font-bold flex items-center justify-center mt-0.5">
+                          {idx + 1}
+                        </span>
+                        <span>{c}</span>
+                      </li>
+                    ))}
+                  </ol>
+                </Section>
+              </div>
+
+              {e.medicamentos.length > 0 && (
+                <div className="mt-5">
+                  <Section icon={<Pill className="w-3.5 h-3.5" />} title="Medicamentos">
+                    <div className="grid grid-cols-2 gap-2">
+                      {e.medicamentos.map((m, idx) => (
+                        <div key={idx} className="p-2 rounded border border-border bg-secondary/40 text-xs">
+                          <div className="font-semibold text-sm">{m.nome}</div>
+                          <div className="text-muted-foreground mt-0.5">
+                            <strong className="text-foreground">Dose:</strong> {m.dose}
+                          </div>
+                          <div className="text-muted-foreground">
+                            <strong className="text-foreground">Via:</strong> {m.via}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </Section>
+                </div>
+              )}
+
+              {e.observacoes && (
+                <div className="mt-5 p-3 rounded-lg border" style={{ borderColor: "#d68910", background: "rgba(214,137,16,0.08)" }}>
+                  <div className="flex items-start gap-2">
+                    <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" style={{ color: "#d68910" }} />
+                    <div>
+                      <div className="text-[10px] font-bold uppercase tracking-wider mb-0.5">Atenção</div>
+                      <p className="text-sm">{e.observacoes}</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {e.severidade === "critica" && (
+                <div className="mt-5 p-3 rounded-lg flex items-center justify-center gap-2 text-white font-bold text-sm" style={{ background: "#c0392b" }}>
+                  <Phone className="w-4 h-4" /> ACIONAR SAMU — 192
+                </div>
+              )}
+
+              <FichaFooter />
+            </article>
+          );
+        })}
+      </main>
+
+      <style>{`
+        .ficha-page {
+          background: white;
+          color: #1a1a1a;
+          border: 1px solid hsl(var(--border, 0 0% 90%));
+          border-radius: 12px;
+          padding: 28px 32px;
+          margin-bottom: 24px;
+          min-height: 1000px;
+          display: flex;
+          flex-direction: column;
+          box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 8px 24px -8px rgba(0,0,0,0.1);
+        }
+        .cover-page { min-height: 1100px; }
+
+        @media print {
+          @page { size: A4; margin: 14mm; }
+          html, body { background: white !important; }
+          .ficha-page {
+            border: none !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            min-height: auto !important;
+            page-break-after: always;
+            break-after: page;
+          }
+          .ficha-page:last-child { page-break-after: auto; break-after: auto; }
+        }
+      `}</style>
+    </div>
+  );
+}
+
+function FichaHeader({
+  title, subtitle, badge, badgeColor, index,
+}: { title: string; subtitle?: string; badge?: string; badgeColor?: string; index?: number }) {
+  return (
+    <header className="flex items-start justify-between gap-4 pb-3 border-b-2 border-foreground/80">
+      <div className="flex items-center gap-3">
+        <img src={logoLiga} alt="" className="w-12 h-12 rounded-full object-cover shrink-0" />
+        <div>
+          {subtitle && (
+            <div className="text-[10px] uppercase tracking-widest text-muted-foreground font-semibold">
+              {subtitle}
+            </div>
+          )}
+          <h2 className="text-xl font-bold leading-tight">{title}</h2>
+        </div>
+      </div>
+      <div className="flex flex-col items-end gap-1 shrink-0">
+        {badge && (
+          <span
+            className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider text-white"
+            style={{ background: badgeColor }}
+          >
+            {badge}
+          </span>
+        )}
+        {index !== undefined && (
+          <span className="text-[10px] text-muted-foreground">
+            Ficha {String(index).padStart(2, "0")} / {emergencias.length}
+          </span>
+        )}
+      </div>
+    </header>
+  );
+}
+
+function FichaFooter() {
+  return (
+    <footer className="mt-auto pt-4 border-t border-border flex items-center justify-between text-[10px] text-muted-foreground">
+      <span>FAST-RESPONSE · Odontologia Santa Bárbara D'Oeste</span>
+      <span>Prof. Juliana Lance / Prof. Francisco Menezes</span>
+    </footer>
+  );
+}
+
+function Section({
+  icon, title, danger, children,
+}: { icon: React.ReactNode; title: string; danger?: boolean; children: React.ReactNode }) {
+  return (
+    <section>
+      <h3
+        className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest mb-2 pb-1 border-b border-border"
+        style={danger ? { color: "#c0392b", borderColor: "#c0392b40" } : undefined}
+      >
+        {icon} {title}
+      </h3>
+      {children}
+    </section>
+  );
+}

@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Phone, BookOpen, Syringe } from "lucide-react";
+import { Phone, BookOpen, Syringe, BookMarked } from "lucide-react";
 import logoLiga from "@/assets/logo-liga.png";
 import logoAnhanguera from "@/assets/logo-anhanguera.png";
 
@@ -8,6 +8,7 @@ export function AppHeader() {
   const navItems = [
     { to: "/", label: "Protocolos", icon: BookOpen },
     { to: "/acessos", label: "Acessos & Medicação", icon: Syringe },
+    { to: "/fichas", label: "Book de Fichas", icon: BookMarked },
   ];
 
   return (

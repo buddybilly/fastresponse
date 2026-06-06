@@ -27,7 +27,22 @@ const sevPrintColor: Record<Severity, string> = {
   moderada: "#1e8449",
 };
 
+const GRUPOS: { sev: Severity; titulo: string; descricao: string }[] = [
+  { sev: "critica", titulo: "Emergências Críticas", descricao: "Risco iminente de morte — acionar SAMU 192 imediatamente" },
+  { sev: "alta", titulo: "Urgências de Alta Prioridade", descricao: "Conduta imediata; reavaliar necessidade de transferência" },
+  { sev: "moderada", titulo: "Urgências Moderadas", descricao: "Estabilização no consultório; encaminhamento conforme evolução" },
+];
+
 function FichasPage() {
+  let n = 0;
+  const numMap = new Map<string, number>();
+  GRUPOS.forEach((g) =>
+    emergencias.filter((e) => e.severidade === g.sev).forEach((e) => {
+      n += 1;
+      numMap.set(e.id, n);
+    })
+  );
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <div className="print:hidden">
@@ -84,40 +99,73 @@ function FichasPage() {
 
         {/* Índice */}
         <article className="ficha-page">
-          <FichaHeader title="Índice" subtitle="Sumário das fichas" />
-          <ol className="mt-6 space-y-1.5 text-sm columns-2 gap-8">
-            {emergencias.map((e, i) => (
-              <li key={e.id} className="break-inside-avoid flex justify-between gap-3 py-1 border-b border-dashed border-border">
-                <span>
-                  <span className="font-semibold mr-2">{String(i + 1).padStart(2, "0")}.</span>
-                  {e.nome}
-                </span>
-                <span
-                  className="text-[10px] font-bold uppercase tracking-wider shrink-0"
-                  style={{ color: sevPrintColor[e.severidade] }}
-                >
-                  {sevLabel[e.severidade]}
-                </span>
-              </li>
-            ))}
-          </ol>
+          <FichaHeader title="Índice" subtitle="Agrupado por classificação" />
+          <div className="mt-5 space-y-5">
+            {GRUPOS.map((g) => {
+              const itens = emergencias.filter((e) => e.severidade === g.sev);
+              return (
+                <div key={g.sev} className="break-inside-avoid">
+                  <div
+                    className="flex items-center justify-between gap-3 px-3 py-1.5 rounded text-white text-xs font-bold uppercase tracking-wider"
+                    style={{ background: sevPrintColor[g.sev] }}
+                  >
+                    <span>{g.titulo}</span>
+                    <span>{itens.length} fichas</span>
+                  </div>
+                  <ol className="mt-2 text-sm">
+                    {itens.map((e) => (
+                      <li key={e.id} className="flex justify-between gap-3 py-1 border-b border-dashed border-border">
+                        <span>
+                          <span className="font-semibold mr-2 text-muted-foreground">
+                            {String(numMap.get(e.id)!).padStart(2, "0")}.
+                          </span>
+                          {e.nome}
+                        </span>
+                        <span className="text-[10px] text-muted-foreground shrink-0">{e.categoria}</span>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              );
+            })}
+          </div>
           <FichaFooter />
         </article>
 
-        {/* Uma ficha por página */}
-        {emergencias.map((e, i) => {
-          const equipe = equipeIdeal(e);
+        {/* Grupos: divisória colorida + fichas */}
+        {GRUPOS.map((g) => {
+          const itens = emergencias.filter((e) => e.severidade === g.sev);
+          if (itens.length === 0) return null;
           return (
-            <article key={e.id} className="ficha-page">
-              <FichaHeader
-                title={e.nome}
-                subtitle={e.categoria}
-                badge={sevLabel[e.severidade]}
-                badgeColor={sevPrintColor[e.severidade]}
-                index={i + 1}
-              />
+            <div key={g.sev}>
+              <article
+                className="ficha-page divider-page"
+                style={{ background: sevPrintColor[g.sev], color: "white", borderColor: sevPrintColor[g.sev] }}
+              >
+                <div className="flex flex-col items-center justify-center text-center h-full gap-5 py-16">
+                  <div className="text-xs uppercase tracking-[0.3em] opacity-80">Seção</div>
+                  <h1 className="text-5xl font-bold tracking-tight leading-tight max-w-2xl">{g.titulo}</h1>
+                  <p className="text-lg opacity-90 max-w-xl px-6">{g.descricao}</p>
+                  <div className="mt-6 text-7xl font-black opacity-30">{itens.length}</div>
+                  <div className="text-sm uppercase tracking-widest opacity-80">
+                    {itens.length === 1 ? "ficha nesta seção" : "fichas nesta seção"}
+                  </div>
+                </div>
+              </article>
 
-              <div className="mt-5 flex items-center gap-3 p-3 rounded-lg border border-border bg-secondary/40">
+              {itens.map((e) => {
+                const equipe = equipeIdeal(e);
+                return (
+                  <article key={e.id} className="ficha-page">
+                    <FichaHeader
+                      title={e.nome}
+                      subtitle={e.categoria}
+                      badge={sevLabel[e.severidade]}
+                      badgeColor={sevPrintColor[e.severidade]}
+                      index={numMap.get(e.id)!}
+                    />
+
+                    <div className="mt-5 flex items-center gap-3 p-3 rounded-lg border border-border bg-secondary/40">
                 <Users className="w-4 h-4 text-primary shrink-0" />
                 <div className="text-sm">
                   <span className="font-semibold">Equipe ideal: {equipe.numero} {equipe.numero === 1 ? "pessoa" : "pessoas"}</span>
@@ -202,8 +250,11 @@ function FichasPage() {
                 </div>
               )}
 
-              <FichaFooter />
-            </article>
+                    <FichaFooter />
+                  </article>
+                );
+              })}
+            </div>
           );
         })}
       </main>

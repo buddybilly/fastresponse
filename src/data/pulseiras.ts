@@ -10,7 +10,8 @@ export type PulseiraKey =
   | "dourada"
   | "cardio"
   | "cinza"
-  | "preta";
+  | "preta"
+  | "oncologica";
 
 export type Pulseira = {
   key: PulseiraKey;
@@ -132,6 +133,15 @@ export const PULSEIRAS: Pulseira[] = [
       "EVITAR anestésico com vasoconstritor — risco de crise hipertensiva/arritmia/IAM.",
       "Monitorar PA, FC e nível de consciência durante todo o procedimento.",
       "Abordagem sem julgamento; orientar e encaminhar para suporte clínico.",
+    ] },
+  { key: "oncologica", nome: "Preta dupla", subtitulo: "Antirreabsortivos / Neoplasia",
+    descricao: "Uso de antirreabsortivos (bisfosfonatos, denosumabe) ou histórico de neoplasia — risco de osteonecrose dos maxilares (MRONJ).",
+    cor: "#1a1a1a", cor2: "#1a1a1a", corTexto: "#ffffff",
+    precaucoes: [
+      "Investigar fármaco, dose, via e tempo de uso (oral x EV) e histórico oncológico.",
+      "Priorizar tratamento conservador; evitar extrações e cirurgias eletivas sempre que possível.",
+      "Quando necessária cirurgia: técnica atraumática, sutura primária e profilaxia antibiótica.",
+      "Reforçar higiene oral, acompanhamento próximo e orientar sinais de MRONJ (dor, exposição óssea).",
     ] },
 ];
 

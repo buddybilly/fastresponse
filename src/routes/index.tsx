@@ -356,6 +356,7 @@ function PulseiraModal({ pulseira, onClose }: { pulseira: Pulseira; onClose: () 
 function ProtocolModal({ emergency, onClose }: { emergency: Emergency; onClose: () => void }) {
   const sev = severityStyle[emergency.severidade];
   const equipe = equipeIdeal(emergency);
+  const pulseiras = pulseirasDe(emergency.id);
   return (
     <div className="fixed inset-0 z-50 flex items-end md:items-center justify-center bg-foreground/40 backdrop-blur-sm p-0 md:p-6 animate-in fade-in" onClick={onClose}>
       <div
@@ -403,6 +404,43 @@ function ProtocolModal({ emergency, onClose }: { emergency: Emergency; onClose: 
             </div>
             <p className="text-xs text-muted-foreground mt-3 leading-relaxed">{equipe.descricao}</p>
           </section>
+
+          {pulseiras.length > 0 && (
+            <section>
+              <h4 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+                <Activity className="w-4 h-4" /> Pulseira(s) de identificação
+              </h4>
+              <div className="grid sm:grid-cols-2 gap-2.5">
+                {pulseiras.map((p) => (
+                  <div
+                    key={p.key}
+                    className="flex items-start gap-3 rounded-xl border p-3"
+                    style={{ borderColor: `${p.cor}66`, background: `${p.cor}12` }}
+                  >
+                    <span
+                      className="mt-0.5 w-9 h-9 rounded-full ring-2 ring-white shrink-0 shadow"
+                      style={{ background: p.cor }}
+                      aria-hidden
+                    />
+                    <div className="min-w-0">
+                      <div className="text-sm font-bold leading-tight" style={{ color: p.cor }}>
+                        {p.nome}
+                      </div>
+                      <div className="text-[11px] font-medium text-foreground/80 leading-tight">
+                        {p.subtitulo}
+                      </div>
+                      <div className="text-[11px] text-muted-foreground leading-snug mt-1">
+                        {p.descricao}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <p className="text-[11px] text-muted-foreground mt-2 italic">
+                Associe sempre a cor da pulseira ao quadro clínico — ajuda a memorizar e a comunicar o risco rapidamente à equipe.
+              </p>
+            </section>
+          )}
 
           <section>
             <h4 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">

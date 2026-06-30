@@ -4,7 +4,7 @@ import {
   Search, AlertTriangle, Activity, Pill, ListChecks, X, ChevronRight, Ban, Phone, User, Users,
 } from "lucide-react";
 import { emergencias, categorias, equipeIdeal, type Emergency, type Severity } from "@/data/emergencies";
-import { PULSEIRAS, pulseirasDe } from "@/data/pulseiras";
+import { PULSEIRAS, pulseirasDe, type Pulseira } from "@/data/pulseiras";
 import { AppHeader } from "@/components/AppHeader";
 import logoLiga from "@/assets/logo-liga.png";
 import logoAnhanguera from "@/assets/logo-anhanguera.png";
@@ -41,6 +41,7 @@ function Index() {
   const [query, setQuery] = useState("");
   const [cat, setCat] = useState<string | null>(null);
   const [selected, setSelected] = useState<Emergency | null>(null);
+  const [pulseira, setPulseira] = useState<Pulseira | null>(null);
   const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
@@ -151,11 +152,14 @@ function Index() {
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
           {PULSEIRAS.map((p) => (
-            <div
+            <button
               key={p.key}
-              className="flex items-center gap-2 rounded-lg border bg-card px-2.5 py-2"
+              type="button"
+              onClick={() => setPulseira(p)}
+              className="flex items-center gap-2 rounded-lg border bg-card px-2.5 py-2 text-left hover:-translate-y-0.5 hover:shadow-sm transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
               style={{ borderColor: `${p.cor}55`, background: `${p.cor}10` }}
-              title={p.descricao}
+              title={`${p.descricao} — toque para ver precauções`}
+              aria-label={`Precauções: ${p.nome}`}
             >
               <span
                 className="w-3 h-3 rounded-full shrink-0 ring-1 ring-border"
@@ -170,7 +174,7 @@ function Index() {
                   {p.subtitulo}
                 </div>
               </div>
-            </div>
+            </button>
           ))}
         </div>
       </section>
@@ -280,9 +284,72 @@ function Index() {
       </footer>
 
       {selected && <ProtocolModal emergency={selected} onClose={() => setSelected(null)} />}
+      {pulseira && <PulseiraModal pulseira={pulseira} onClose={() => setPulseira(null)} />}
       </div>
     </div>
     </>
+  );
+}
+
+function PulseiraModal({ pulseira, onClose }: { pulseira: Pulseira; onClose: () => void }) {
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-end md:items-center justify-center bg-foreground/40 backdrop-blur-sm p-0 md:p-6 animate-in fade-in"
+      onClick={onClose}
+    >
+      <div
+        className="bg-card w-full md:max-w-lg md:rounded-2xl rounded-t-2xl max-h-[92vh] overflow-y-auto border shadow-2xl animate-in slide-in-from-bottom"
+        style={{ borderColor: `${pulseira.cor}66` }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div
+          className="px-6 py-4 flex items-start justify-between gap-4"
+          style={{ background: pulseira.cor, color: pulseira.corTexto }}
+        >
+          <div className="flex items-center gap-3">
+            <span
+              className="w-8 h-8 rounded-full ring-2"
+              style={{ background: pulseira.corTexto, borderColor: pulseira.corTexto }}
+              aria-hidden
+            />
+            <div>
+              <div className="text-[10px] uppercase tracking-widest opacity-80">Pulseira</div>
+              <h3 className="text-xl font-bold leading-tight">{pulseira.nome}</h3>
+              <div className="text-xs opacity-90">{pulseira.subtitulo}</div>
+            </div>
+          </div>
+          <button
+            onClick={onClose}
+            className="p-2 rounded-lg hover:bg-black/10 transition-colors"
+            aria-label="Fechar"
+            style={{ color: pulseira.corTexto }}
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+        <div className="p-6 space-y-5">
+          <p className="text-sm text-muted-foreground">{pulseira.descricao}</p>
+          <section>
+            <h4 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+              <ListChecks className="w-4 h-4" /> Medidas de precaução
+            </h4>
+            <ol className="space-y-2.5">
+              {pulseira.precaucoes.map((m, i) => (
+                <li key={i} className="flex items-start gap-3 text-sm">
+                  <span
+                    className="shrink-0 w-6 h-6 rounded-full text-xs font-bold flex items-center justify-center"
+                    style={{ background: pulseira.cor, color: pulseira.corTexto }}
+                  >
+                    {i + 1}
+                  </span>
+                  <span className="pt-0.5">{m}</span>
+                </li>
+              ))}
+            </ol>
+          </section>
+        </div>
+      </div>
+    </div>
   );
 }
 

@@ -345,7 +345,7 @@ function PulseiraModal({ pulseira, onClose }: { pulseira: Pulseira; onClose: () 
               aria-hidden
             />
             <div>
-              <div className="text-[10px] uppercase tracking-widest opacity-80">Pulseira</div>
+              <div className="text-[10px] uppercase tracking-widest opacity-80">Identificação</div>
               <h3 className="text-xl font-bold leading-tight">{pulseira.nome}</h3>
               <div className="text-xs opacity-90">{pulseira.subtitulo}</div>
             </div>

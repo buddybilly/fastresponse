@@ -147,7 +147,7 @@ function Index() {
         <div className="flex items-center gap-2 mb-3">
           <Activity className="w-4 h-4 text-primary" />
           <h3 className="text-sm font-semibold uppercase tracking-wider text-primary">
-            Pulseiras de identificação
+            Identificação em cores no prontuário
           </h3>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
@@ -281,7 +281,7 @@ function Index() {
                           className="w-2 h-2 rounded-full ring-1 ring-white/70"
                           style={{ background: p.corTexto }}
                         />
-                        Pulseira {p.nome}
+                        {p.nome}
                       </span>
                     ))}
                   </div>
@@ -345,7 +345,7 @@ function PulseiraModal({ pulseira, onClose }: { pulseira: Pulseira; onClose: () 
               aria-hidden
             />
             <div>
-              <div className="text-[10px] uppercase tracking-widest opacity-80">Pulseira</div>
+              <div className="text-[10px] uppercase tracking-widest opacity-80">Identificação</div>
               <h3 className="text-xl font-bold leading-tight">{pulseira.nome}</h3>
               <div className="text-xs opacity-90">{pulseira.subtitulo}</div>
             </div>
@@ -440,7 +440,7 @@ function ProtocolModal({ emergency, onClose }: { emergency: Emergency; onClose: 
           {pulseiras.length > 0 && (
             <section>
               <h4 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">
-                <Activity className="w-4 h-4" /> Pulseira(s) de identificação
+                <Activity className="w-4 h-4" /> Identificação em cores no prontuário
               </h4>
               <div className="grid sm:grid-cols-2 gap-2.5">
                 {pulseiras.map((p) => (
@@ -476,7 +476,7 @@ function ProtocolModal({ emergency, onClose }: { emergency: Emergency; onClose: 
                 ))}
               </div>
               <p className="text-[11px] text-muted-foreground mt-2 italic">
-                Associe sempre a cor da pulseira ao quadro clínico — ajuda a memorizar e a comunicar o risco rapidamente à equipe.
+                Associe sempre a cor de identificação ao quadro clínico — ajuda a memorizar e a comunicar o risco rapidamente à equipe.
               </p>
             </section>
           )}

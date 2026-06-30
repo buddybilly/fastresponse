@@ -226,9 +226,27 @@ function Index() {
                 {tint && (
                   <span
                     aria-hidden
-                    className="absolute left-0 top-0 bottom-0 w-1"
-                    style={{ background: tint }}
+                    className="absolute left-0 top-0 bottom-0 w-1.5"
+                    style={{
+                      background:
+                        pulseiras.length > 1
+                          ? `linear-gradient(180deg, ${pulseiras.map((p) => p.cor).join(", ")})`
+                          : tint,
+                    }}
                   />
+                )}
+                {pulseiras.length > 0 && (
+                  <div className="absolute top-2 right-2 flex -space-x-1.5">
+                    {pulseiras.map((p) => (
+                      <span
+                        key={p.key}
+                        title={`${p.nome} — ${p.subtitulo}`}
+                        aria-label={p.nome}
+                        className="w-5 h-5 rounded-full ring-2 ring-card shadow-sm"
+                        style={{ background: p.cor }}
+                      />
+                    ))}
+                  </div>
                 )}
                 <div className="flex items-start justify-between gap-3 mb-3">
                   <span className="text-xs font-medium text-muted-foreground">{e.categoria}</span>
@@ -245,11 +263,14 @@ function Index() {
                       <span
                         key={p.key}
                         title={p.descricao}
-                        className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-semibold border"
-                        style={{ background: `${p.cor}1A`, color: p.cor, borderColor: `${p.cor}55` }}
+                        className="inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-[10px] font-bold border"
+                        style={{ background: p.cor, color: p.corTexto, borderColor: p.cor }}
                       >
-                        <span className="w-1.5 h-1.5 rounded-full" style={{ background: p.cor }} />
-                        {p.nome}
+                        <span
+                          className="w-2 h-2 rounded-full ring-1 ring-white/70"
+                          style={{ background: p.corTexto }}
+                        />
+                        Pulseira {p.nome}
                       </span>
                     ))}
                   </div>

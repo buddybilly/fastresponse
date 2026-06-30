@@ -8,7 +8,7 @@ export type PulseiraKey =
   | "marrom"
   | "verde"
   | "dourada"
-  | "branca"
+  | "cardio"
   | "cinza"
   | "preta";
 
@@ -20,6 +20,7 @@ export type Pulseira = {
   cor: string;
   corTexto: string;
   precaucoes: string[];
+  cor2?: string;
 };
 
 export const PULSEIRAS: Pulseira[] = [
@@ -104,14 +105,15 @@ export const PULSEIRAS: Pulseira[] = [
       "Técnica atraumática, suturar mesmo extrações simples.",
       "Orientar compressão prolongada e contato imediato em sangramento.",
     ] },
-  { key: "branca", nome: "Branca + Vermelha", subtitulo: "Hipertenso (HAS)",
-    descricao: "Paciente hipertenso — monitorar PA, evitar vasoconstritor em excesso.",
-    cor: "#b0bec5", corTexto: "#1a1a1a",
+  { key: "cardio", nome: "Cardiovascular", subtitulo: "HAS, IAM, arritmias, ICC",
+    descricao: "Paciente cardiopata ou hipertenso — risco de eventos cardiovasculares.",
+    cor: "#c0392b", cor2: "#c0392b", corTexto: "#ffffff",
     precaucoes: [
       "Aferir PA antes, durante (se longa) e após o procedimento.",
       "Adiar atendimento eletivo se PA ≥ 180/110 mmHg.",
       "Limitar vasoconstritor: máx. 2 tubetes de lidocaína 2% com epinefrina 1:100.000.",
-      "Confirmar uso regular dos anti-hipertensivos no dia da consulta.",
+      "Confirmar uso regular de anti-hipertensivos/antiagregantes no dia da consulta.",
+      "Sessões curtas, matinais, com bom controle de ansiedade e dor.",
     ] },
   { key: "cinza", nome: "Cinza + Azul", subtitulo: "Diabético (DM)",
     descricao: "Paciente diabético — risco de hipo/hiperglicemia, atenção ao jejum.",
@@ -136,18 +138,20 @@ export const PULSEIRAS: Pulseira[] = [
 export const PULSEIRAS_POR_FICHA: Record<string, PulseiraKey[]> = {
   anafilaxia: ["vermelha"],
   "edema-angioneurotico": ["vermelha"],
-  sincope: ["amarela"],
-  hipotensao: ["amarela"],
+  sincope: ["amarela", "cardio"],
+  hipotensao: ["amarela", "cardio"],
   hipoglicemia: ["amarela"],
-  avc: ["amarela", "roxa"],
+  avc: ["amarela", "roxa", "cardio"],
   convulsao: ["amarela", "roxa"],
   broncoespasmo: ["roxa"],
   "obstrucao-via-aerea": ["roxa"],
   aspiracao: ["roxa"],
-  pcr: ["roxa"],
+  pcr: ["roxa", "cardio"],
   "choque-hemorragico": ["dourada"],
-  eclampsia: ["amarela", "dourada"],
-  iam: ["vermelha"],
+  eclampsia: ["amarela", "dourada", "cardio"],
+  iam: ["vermelha", "cardio"],
+  "crise-hipertensiva": ["cardio"],
+  arritmia: ["cardio"],
   "intoxicacao-anestesico": ["vermelha"],
 };
 

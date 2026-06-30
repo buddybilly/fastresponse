@@ -161,11 +161,18 @@ function Index() {
               title={`${p.descricao} — toque para ver precauções`}
               aria-label={`Precauções: ${p.nome}`}
             >
-              <span
-                className="w-3 h-3 rounded-full shrink-0 ring-1 ring-border"
-                style={{ background: p.cor }}
-                aria-hidden
-              />
+              <span className="flex items-center -space-x-1 shrink-0" aria-hidden>
+                <span
+                  className="w-3 h-3 rounded-full ring-1 ring-border"
+                  style={{ background: p.cor }}
+                />
+                {p.cor2 && (
+                  <span
+                    className="w-3 h-3 rounded-full ring-1 ring-border"
+                    style={{ background: p.cor2 }}
+                  />
+                )}
+              </span>
               <div className="min-w-0">
                 <div className="text-[11px] font-bold leading-tight" style={{ color: p.cor }}>
                   {p.nome}

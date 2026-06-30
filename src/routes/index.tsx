@@ -440,7 +440,7 @@ function ProtocolModal({ emergency, onClose }: { emergency: Emergency; onClose: 
           {pulseiras.length > 0 && (
             <section>
               <h4 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">
-                <Activity className="w-4 h-4" /> Pulseira(s) de identificação
+                <Activity className="w-4 h-4" /> Identificação em cores no prontuário
               </h4>
               <div className="grid sm:grid-cols-2 gap-2.5">
                 {pulseiras.map((p) => (
@@ -476,7 +476,7 @@ function ProtocolModal({ emergency, onClose }: { emergency: Emergency; onClose: 
                 ))}
               </div>
               <p className="text-[11px] text-muted-foreground mt-2 italic">
-                Associe sempre a cor da pulseira ao quadro clínico — ajuda a memorizar e a comunicar o risco rapidamente à equipe.
+                Associe sempre a cor de identificação ao quadro clínico — ajuda a memorizar e a comunicar o risco rapidamente à equipe.
               </p>
             </section>
           )}

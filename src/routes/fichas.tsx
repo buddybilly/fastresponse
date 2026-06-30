@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Printer, Activity, ListChecks, Ban, Pill, AlertTriangle, Users, Phone } from "lucide-react";
 import { emergencias, equipeIdeal, type Severity } from "@/data/emergencies";
+import { PULSEIRAS, pulseirasDe } from "@/data/pulseiras";
 import { AppHeader } from "@/components/AppHeader";
 import logoLiga from "@/assets/logo-liga.png";
 import logoAnhanguera from "@/assets/logo-anhanguera.png";
@@ -32,64 +33,6 @@ const GRUPOS: { sev: Severity; titulo: string; descricao: string }[] = [
   { sev: "alta", titulo: "Urgências de Alta Prioridade", descricao: "Conduta imediata; reavaliar necessidade de transferência" },
   { sev: "moderada", titulo: "Urgências Moderadas", descricao: "Estabilização no consultório; encaminhamento conforme evolução" },
 ];
-
-// Tabela de pulseiras de identificação hospitalar (referência)
-type PulseiraKey = "vermelha" | "amarela" | "laranja" | "azul" | "verde" | "roxa";
-
-const PULSEIRAS: {
-  key: PulseiraKey;
-  nome: string;
-  subtitulo: string;
-  descricao: string;
-  cor: string;
-  corTexto: string;
-}[] = [
-  { key: "vermelha", nome: "Vermelha", subtitulo: "Alergias",
-    descricao: "Alerta crítico. Paciente com alergia grave a medicamentos, alimentos ou outras substâncias.",
-    cor: "#c0392b", corTexto: "#ffffff" },
-  { key: "amarela", nome: "Amarela", subtitulo: "Risco de Queda",
-    descricao: "Pacientes idosos, sedados, com dificuldade de locomoção ou sob efeito de medicamentos que alteram o equilíbrio.",
-    cor: "#f1c40f", corTexto: "#1a1a1a" },
-  { key: "laranja", nome: "Laranja", subtitulo: "Segurança Geral / Protocolo",
-    descricao: "Associada ao Dia Mundial da Segurança do Paciente (OMS) ou a riscos assistenciais moderados.",
-    cor: "#e67e22", corTexto: "#ffffff" },
-  { key: "azul", nome: "Azul", subtitulo: "Precaução por Aerossóis / Isolamento",
-    descricao: "Pacientes em isolamento respiratório (tuberculose, doenças de transmissão aérea) ou com risco de lesão por pressão.",
-    cor: "#2e86c1", corTexto: "#ffffff" },
-  { key: "verde", nome: "Verde", subtitulo: "Precaução por Gotículas",
-    descricao: "Isolamento por transmissão via gotículas (meningite, influenza, etc.).",
-    cor: "#1e8449", corTexto: "#ffffff" },
-  { key: "roxa", nome: "Roxa / Outras Cores", subtitulo: "Restrições / Cuidados Especiais",
-    descricao: "Restrição de membros (ex.: não puncionar veia em braço com mastectomia) ou outras comorbidades específicas.",
-    cor: "#7d3c98", corTexto: "#ffffff" },
-];
-
-// Liga cada ficha às pulseiras pertinentes (ligação direta de cor)
-const PULSEIRAS_POR_FICHA: Record<string, PulseiraKey[]> = {
-  anafilaxia: ["vermelha"],
-  "edema-angioneurotico": ["vermelha"],
-  sincope: ["amarela"],
-  hipotensao: ["amarela"],
-  hipoglicemia: ["amarela"],
-  avc: ["amarela"],
-  convulsao: ["amarela", "roxa"],
-  broncoespasmo: ["azul"],
-  "obstrucao-via-aerea": ["azul"],
-  aspiracao: ["azul"],
-  hiperventilacao: ["verde"],
-  "intoxicacao-anestesico": ["roxa"],
-  "reacao-vasoconstritor": ["roxa"],
-  "crise-hipertensiva": ["laranja"],
-  angina: ["laranja"],
-  iam: ["laranja", "vermelha"],
-  pcr: ["laranja"],
-  hiperglicemia: ["laranja"],
-};
-
-function pulseirasDe(id: string): typeof PULSEIRAS {
-  const keys = PULSEIRAS_POR_FICHA[id] ?? [];
-  return PULSEIRAS.filter((p) => keys.includes(p.key));
-}
 
 function FichasPage() {
   let n = 0;

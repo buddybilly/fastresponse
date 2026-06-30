@@ -4,6 +4,7 @@ import {
   Search, AlertTriangle, Activity, Pill, ListChecks, X, ChevronRight, Ban, Phone, User, Users,
 } from "lucide-react";
 import { emergencias, categorias, equipeIdeal, type Emergency, type Severity } from "@/data/emergencies";
+import { PULSEIRAS, pulseirasDe } from "@/data/pulseiras";
 import { AppHeader } from "@/components/AppHeader";
 import logoLiga from "@/assets/logo-liga.png";
 import logoAnhanguera from "@/assets/logo-anhanguera.png";
@@ -141,6 +142,39 @@ function Index() {
         </div>
       </section>
 
+      <section className="max-w-6xl mx-auto px-5 pb-8">
+        <div className="flex items-center gap-2 mb-3">
+          <Activity className="w-4 h-4 text-primary" />
+          <h3 className="text-sm font-semibold uppercase tracking-wider text-primary">
+            Pulseiras de identificação
+          </h3>
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
+          {PULSEIRAS.map((p) => (
+            <div
+              key={p.key}
+              className="flex items-center gap-2 rounded-lg border bg-card px-2.5 py-2"
+              style={{ borderColor: `${p.cor}55`, background: `${p.cor}10` }}
+              title={p.descricao}
+            >
+              <span
+                className="w-3 h-3 rounded-full shrink-0 ring-1 ring-border"
+                style={{ background: p.cor }}
+                aria-hidden
+              />
+              <div className="min-w-0">
+                <div className="text-[11px] font-bold leading-tight" style={{ color: p.cor }}>
+                  {p.nome}
+                </div>
+                <div className="text-[10px] text-muted-foreground leading-tight truncate">
+                  {p.subtitulo}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {!query && !cat && (
         <section className="max-w-6xl mx-auto px-5 pb-8">
           <div className="flex items-center gap-2 mb-3">
@@ -172,13 +206,26 @@ function Index() {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filtered.map((e) => {
             const sev = severityStyle[e.severidade];
+            const pulseiras = pulseirasDe(e.id);
+            const tint = pulseiras[0]?.cor;
             return (
               <button
                 key={e.id}
                 onClick={() => setSelected(e)}
-                className="text-left p-5 rounded-2xl bg-card border border-border hover:border-primary/40 hover:-translate-y-0.5 transition-all"
-                style={{ boxShadow: "var(--shadow-card)" }}
+                className="text-left p-5 rounded-2xl bg-card border hover:-translate-y-0.5 transition-all relative overflow-hidden"
+                style={{
+                  boxShadow: "var(--shadow-card)",
+                  borderColor: tint ? `${tint}55` : undefined,
+                  background: tint ? `linear-gradient(180deg, ${tint}0D, transparent 60%), var(--card, #fff)` : undefined,
+                }}
               >
+                {tint && (
+                  <span
+                    aria-hidden
+                    className="absolute left-0 top-0 bottom-0 w-1"
+                    style={{ background: tint }}
+                  />
+                )}
                 <div className="flex items-start justify-between gap-3 mb-3">
                   <span className="text-xs font-medium text-muted-foreground">{e.categoria}</span>
                   <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-semibold border ${sev.cls}`}>
@@ -188,6 +235,21 @@ function Index() {
                 </div>
                 <h4 className="font-semibold text-lg leading-tight mb-2">{e.nome}</h4>
                 <p className="text-sm text-muted-foreground line-clamp-2">{e.sinais[0]}{e.sinais[1] ? ` · ${e.sinais[1]}` : ""}</p>
+                {pulseiras.length > 0 && (
+                  <div className="mt-3 flex flex-wrap gap-1.5">
+                    {pulseiras.map((p) => (
+                      <span
+                        key={p.key}
+                        title={p.descricao}
+                        className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-semibold border"
+                        style={{ background: `${p.cor}1A`, color: p.cor, borderColor: `${p.cor}55` }}
+                      >
+                        <span className="w-1.5 h-1.5 rounded-full" style={{ background: p.cor }} />
+                        {p.nome}
+                      </span>
+                    ))}
+                  </div>
+                )}
                 <div className="mt-4 pt-4 border-t border-border flex items-center justify-between text-xs">
                   <TeamBadge n={equipeIdeal(e).numero} />
                   <span className="text-primary font-medium flex items-center gap-1">

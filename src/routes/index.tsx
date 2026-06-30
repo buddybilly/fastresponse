@@ -147,7 +147,7 @@ function Index() {
         <div className="flex items-center gap-2 mb-3">
           <Activity className="w-4 h-4 text-primary" />
           <h3 className="text-sm font-semibold uppercase tracking-wider text-primary">
-            Pulseiras de identificação
+            Identificação em cores no prontuário
           </h3>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
@@ -281,7 +281,7 @@ function Index() {
                           className="w-2 h-2 rounded-full ring-1 ring-white/70"
                           style={{ background: p.corTexto }}
                         />
-                        Pulseira {p.nome}
+                        {p.nome}
                       </span>
                     ))}
                   </div>

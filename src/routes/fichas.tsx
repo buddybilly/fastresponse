@@ -155,6 +155,53 @@ function FichasPage() {
           </div>
         </article>
 
+        {/* Tabela de Referência — Pulseiras de Identificação */}
+        <article className="ficha-page">
+          <FichaHeader title="Pulseiras de Identificação" subtitle="Tabela de referência — cores e significados" />
+          <p className="mt-4 text-sm text-muted-foreground">
+            Sistema de pulseiras coloridas adotado em ambiente hospitalar para sinalizar riscos e cuidados
+            especiais. As mesmas cores são reaplicadas nas fichas correspondentes deste book.
+          </p>
+          <div className="mt-5 grid grid-cols-1 gap-3">
+            {PULSEIRAS.map((p) => (
+              <div
+                key={p.key}
+                className="rounded-lg overflow-hidden border break-inside-avoid flex"
+                style={{ borderColor: p.cor }}
+              >
+                <div
+                  className="w-3 shrink-0"
+                  style={{ background: p.cor }}
+                  aria-hidden
+                />
+                <div className="flex-1 p-3 flex items-start gap-3">
+                  <span
+                    className="shrink-0 inline-block w-6 h-6 rounded-full mt-0.5 ring-2 ring-white shadow"
+                    style={{ background: p.cor }}
+                    aria-hidden
+                  />
+                  <div className="flex-1">
+                    <div className="flex items-baseline gap-2 flex-wrap">
+                      <span
+                        className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider"
+                        style={{ background: p.cor, color: p.corTexto }}
+                      >
+                        {p.nome}
+                      </span>
+                      <span className="text-sm font-semibold">{p.subtitulo}</span>
+                    </div>
+                    <p className="mt-1 text-sm text-foreground/90 leading-snug">{p.descricao}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-4 text-[10px] text-muted-foreground italic">
+            Fonte: padrões hospitalares de identificação de pacientes (referências: Proqualis/Fiocruz, Unimed, OMS).
+          </div>
+          <FichaFooter />
+        </article>
+
         {/* Índice */}
         <article className="ficha-page">
           <FichaHeader title="Índice" subtitle="Agrupado por classificação" />
@@ -222,6 +269,27 @@ function FichasPage() {
                       badgeColor={sevPrintColor[e.severidade]}
                       index={numMap.get(e.id)!}
                     />
+
+                    {pulseirasDe(e.id).length > 0 && (
+                      <div className="mt-3 flex flex-wrap items-center gap-2">
+                        <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-semibold">
+                          Pulseiras:
+                        </span>
+                        {pulseirasDe(e.id).map((p) => (
+                          <span
+                            key={p.key}
+                            className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border"
+                            style={{ background: p.cor, color: p.corTexto, borderColor: p.cor }}
+                          >
+                            <span
+                              className="inline-block w-2 h-2 rounded-full bg-white/80"
+                              aria-hidden
+                            />
+                            {p.nome} · {p.subtitulo}
+                          </span>
+                        ))}
+                      </div>
+                    )}
 
                     <div className="mt-5 flex items-center gap-3 p-3 rounded-lg border border-border bg-secondary/40">
                 <Users className="w-4 h-4 text-primary shrink-0" />

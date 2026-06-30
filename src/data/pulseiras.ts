@@ -7,7 +7,10 @@ export type PulseiraKey =
   | "rosa"
   | "marrom"
   | "verde"
-  | "dourada";
+  | "dourada"
+  | "branca"
+  | "cinza"
+  | "preta";
 
 export type Pulseira = {
   key: PulseiraKey;
@@ -46,6 +49,15 @@ export const PULSEIRAS: Pulseira[] = [
   { key: "dourada", nome: "Dourada", subtitulo: "Risco de hemorragia",
     descricao: "Alto risco de sangramento.",
     cor: "#c9a227", corTexto: "#1a1a1a" },
+  { key: "branca", nome: "Branca + Vermelha", subtitulo: "Hipertenso (HAS)",
+    descricao: "Paciente hipertenso — monitorar PA, evitar vasoconstritor em excesso.",
+    cor: "#b0bec5", corTexto: "#1a1a1a" },
+  { key: "cinza", nome: "Cinza + Azul", subtitulo: "Diabético (DM)",
+    descricao: "Paciente diabético — risco de hipo/hiperglicemia, atenção ao jejum.",
+    cor: "#607d8b", corTexto: "#ffffff" },
+  { key: "preta", nome: "Preta", subtitulo: "Uso de substâncias ilícitas",
+    descricao: "Uso de drogas ilícitas — risco anestésico e interações (cocaína, crack, anfetaminas).",
+    cor: "#1a1a1a", corTexto: "#ffffff" },
 ];
 
 export const PULSEIRAS_POR_FICHA: Record<string, PulseiraKey[]> = {

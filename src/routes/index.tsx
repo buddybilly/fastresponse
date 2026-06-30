@@ -250,7 +250,11 @@ function Index() {
                         title={`${p.nome} — ${p.subtitulo}`}
                         aria-label={p.nome}
                         className="w-5 h-5 rounded-full ring-2 ring-card shadow-sm"
-                        style={{ background: p.cor }}
+                        style={{
+                          background: p.cor2
+                            ? `linear-gradient(90deg, ${p.cor} 50%, ${p.cor2} 50%)`
+                            : p.cor,
+                        }}
                       />
                     ))}
                   </div>
@@ -445,11 +449,18 @@ function ProtocolModal({ emergency, onClose }: { emergency: Emergency; onClose: 
                     className="flex items-start gap-3 rounded-xl border p-3"
                     style={{ borderColor: `${p.cor}66`, background: `${p.cor}12` }}
                   >
-                    <span
-                      className="mt-0.5 w-9 h-9 rounded-full ring-2 ring-white shrink-0 shadow"
-                      style={{ background: p.cor }}
-                      aria-hidden
-                    />
+                    <span className="mt-0.5 flex items-center -space-x-2 shrink-0" aria-hidden>
+                      <span
+                        className="w-9 h-9 rounded-full ring-2 ring-white shadow"
+                        style={{ background: p.cor }}
+                      />
+                      {p.cor2 && (
+                        <span
+                          className="w-9 h-9 rounded-full ring-2 ring-white shadow"
+                          style={{ background: p.cor2 }}
+                        />
+                      )}
+                    </span>
                     <div className="min-w-0">
                       <div className="text-sm font-bold leading-tight" style={{ color: p.cor }}>
                         {p.nome}

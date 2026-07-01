@@ -10,6 +10,7 @@ import {
 
 import appCss from "../styles.css?url";
 import { PwaProvider } from "../components/PwaProvider";
+import nspLogo from "@/assets/nsp-logo.png.asset.json";
 
 function NotFoundComponent() {
   return (
@@ -125,6 +126,18 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <div
+        aria-hidden
+        className="pointer-events-none fixed inset-0 -z-10 bg-background"
+        style={{
+          backgroundImage: `url(${nspLogo.url})`,
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center 30%",
+          backgroundSize: "min(680px, 85%)",
+          backgroundAttachment: "fixed",
+          opacity: 0.08,
+        }}
+      />
       <Outlet />
       <PwaProvider />
     </QueryClientProvider>

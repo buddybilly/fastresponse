@@ -9,6 +9,7 @@ import { AppHeader } from "@/components/AppHeader";
 import logoLiga from "@/assets/logo-liga.png";
 import logoAnhanguera from "@/assets/logo-anhanguera.png";
 import watermark from "@/assets/watermark-fast-response.png";
+import nspLogo from "@/assets/nsp-logo.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -79,6 +80,7 @@ function Index() {
         <div className="flex items-center gap-6">
           <img src={logoLiga} alt="Liga Acadêmica" className="h-20 w-20 rounded-full object-cover ring-1 ring-border" />
           <img src={logoAnhanguera} alt="Anhanguera Santa Bárbara D'Oeste" className="h-14 w-auto" />
+          <img src={nspLogo.url} alt="Núcleo de Segurança do Paciente" className="h-20 w-auto" />
         </div>
         <p className="text-xs text-muted-foreground tracking-wide uppercase">Toque para continuar</p>
       </div>

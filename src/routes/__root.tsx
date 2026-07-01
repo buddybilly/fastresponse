@@ -135,7 +135,7 @@ function RootComponent() {
           backgroundPosition: "center 30%",
           backgroundSize: "min(680px, 85%)",
           backgroundAttachment: "fixed",
-          opacity: 0.08,
+          opacity: 0.14,
         }}
       />
       <Outlet />

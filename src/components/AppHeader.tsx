@@ -2,6 +2,7 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import { Phone, BookOpen, Syringe, BookMarked } from "lucide-react";
 import logoLiga from "@/assets/logo-liga.png";
 import logoAnhanguera from "@/assets/logo-anhanguera.png";
+import nspLogo from "@/assets/nsp-logo.png.asset.json";
 
 export function AppHeader() {
   const path = useRouterState({ select: (s) => s.location.pathname });
@@ -17,6 +18,7 @@ export function AppHeader() {
         <Link to="/" className="flex items-center gap-3 group">
           <img src={logoLiga} alt="Liga Acadêmica de Cirurgia e Traumatologia Bucomaxilofaciais" className="w-11 h-11 rounded-full object-cover shrink-0 ring-1 ring-border" />
           <img src={logoAnhanguera} alt="Anhanguera Santa Bárbara D'Oeste" className="hidden sm:block h-9 w-auto shrink-0" />
+          <img src={nspLogo.url} alt="Núcleo de Segurança do Paciente - Anhanguera Santa Bárbara" className="hidden sm:block h-10 w-auto shrink-0" />
           <div className="leading-tight">
             <h1 className="font-semibold text-sm md:text-base">FAST-RESPONSE</h1>
             <p className="text-[10px] md:text-xs text-muted-foreground uppercase tracking-wider">

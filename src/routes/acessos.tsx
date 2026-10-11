@@ -7,6 +7,10 @@ export const Route = createFileRoute("/acessos")({
     meta: [
       { title: "Acessos & Vias de Administração — FAST-RESPONSE - Odontologia Santa Bárbara" },
       { name: "description", content: "Como obter acessos venosos, intramusculares, sublinguais e demais vias de administração de medicamentos em emergências odontológicas." },
+      { property: "og:title", content: "Acessos & Vias de Administração — FAST-RESPONSE - Odontologia Santa Bárbara" },
+      { property: "og:description", content: "Como obter acessos venosos, intramusculares, sublinguais e demais vias de administração de medicamentos em emergências odontológicas." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: AcessosPage,

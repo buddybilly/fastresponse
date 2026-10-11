@@ -12,6 +12,10 @@ export const Route = createFileRoute("/")({
  meta: [
  { title: "FAST-RESPONSE - Odontologia Santa Bárbara — Urgências Sistêmicas" },
  { name: "description", content: "Guia clínico de bolso para urgências e emergências sistêmicas no consultório odontológico: protocolos, sinais, condutas, medicamentos e o que NÃO fazer." },
+      { property: "og:title", content: "FAST-RESPONSE - Odontologia Santa Bárbara — Urgências Sistêmicas" },
+      { property: "og:description", content: "Guia clínico de bolso para urgências e emergências sistêmicas no consultório odontológico: protocolos, sinais, condutas, medicamentos e o que NÃO fazer." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
  ],
  }),
  component: Index,

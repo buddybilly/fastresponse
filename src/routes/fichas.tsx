@@ -11,6 +11,10 @@ export const Route = createFileRoute("/fichas")({
     meta: [
       { title: "Book de Fichas — FAST-RESPONSE Odontologia S.B.O." },
       { name: "description", content: "Book de acesso rápido com todas as fichas de urgências e emergências sistêmicas em odontologia, formatadas para impressão A4." },
+      { property: "og:title", content: "Book de Fichas — FAST-RESPONSE Odontologia S.B.O." },
+      { property: "og:description", content: "Book de acesso rápido com todas as fichas de urgências e emergências sistêmicas em odontologia, formatadas para impressão A4." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: FichasPage,

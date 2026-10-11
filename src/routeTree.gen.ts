@@ -9,13 +9,13 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as AcessosRouteImport } from './routes/acessos'
 import { Route as FichasRouteImport } from './routes/fichas'
+import { Route as AcessosRouteImport } from './routes/acessos'
+import { Route as IndexRouteImport } from './routes/index'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const FichasRoute = FichasRouteImport.update({
+  id: '/fichas',
+  path: '/fichas',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AcessosRoute = AcessosRouteImport.update({
@@ -23,9 +23,9 @@ const AcessosRoute = AcessosRouteImport.update({
   path: '/acessos',
   getParentRoute: () => rootRouteImport,
 } as any)
-const FichasRoute = FichasRouteImport.update({
-  id: '/fichas',
-  path: '/fichas',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -61,11 +61,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/fichas': {
+      id: '/fichas'
+      path: '/fichas'
+      fullPath: '/fichas'
+      preLoaderRoute: typeof FichasRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/acessos': {
@@ -75,11 +75,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AcessosRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/fichas': {
-      id: '/fichas'
-      path: '/fichas'
-      fullPath: '/fichas'
-      preLoaderRoute: typeof FichasRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
   }

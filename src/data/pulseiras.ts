@@ -11,7 +11,8 @@ export type PulseiraKey =
   | "cardio"
   | "cinza"
   | "preta"
-  | "oncologica";
+  | "oncologica"
+  | "psicofarmacos";
 
 export type Pulseira = {
   key: PulseiraKey;
@@ -142,6 +143,15 @@ export const PULSEIRAS: Pulseira[] = [
       "Priorizar tratamento conservador; evitar extrações e cirurgias eletivas sempre que possível.",
       "Quando necessária cirurgia: técnica atraumática, sutura primária e profilaxia antibiótica.",
       "Reforçar higiene oral, acompanhamento próximo e orientar sinais de MRONJ (dor, exposição óssea).",
+    ] },
+  { key: "psicofarmacos", nome: "Roxa + Verde", subtitulo: "Benzodiazepínicos, antidepressivos ou depressores do SNC",
+    descricao: "Identificação de paciente em uso desses medicamentos para apoiar a revisão clínica e medicamentosa.",
+    cor: "#7d3c98", cor2: "#1e8449", corTexto: "#ffffff",
+    precaucoes: [
+      "Registrar medicamentos em uso, dose e horário da última tomada.",
+      "Verificar possíveis interações medicamentosas e efeitos sedativos.",
+      "Avaliar estado de consciência e sinais vitais conforme o contexto clínico.",
+      "Não orientar suspensão abrupta; esclarecer dúvidas com o prescritor.",
     ] },
 ];
 

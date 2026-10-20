@@ -392,7 +392,11 @@ function Index() {
  >
  <span
  className="w-2 h-2 rounded-full ring-1 ring-white/70"
- style={{ background: p.corTexto }}
+ style={{
+ background: p.cor2
+ ? `linear-gradient(90deg, ${p.cor} 50%, ${p.cor2} 50%)`
+ : p.cor,
+ }}
  />
  {p.nome}
  </span>
@@ -560,7 +564,12 @@ function PulseiraModal({ pulseira, onClose }: { pulseira: Pulseira; onClose: () 
  <div className="flex items-center gap-3">
  <span
  className="w-8 h-8 rounded-full ring-2"
- style={{ background: pulseira.corTexto, borderColor: pulseira.corTexto }}
+ style={{
+ background: pulseira.cor2
+ ? `linear-gradient(90deg, ${pulseira.cor} 50%, ${pulseira.cor2} 50%)`
+ : pulseira.cor,
+ borderColor: pulseira.corTexto,
+ }}
  aria-hidden
  />
  <div>

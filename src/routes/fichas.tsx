@@ -118,21 +118,13 @@ function FichasPage() {
               >
                 <div
                   className="w-3 shrink-0"
-                  style={{
-                    background: p.cor2
-                      ? `linear-gradient(180deg, ${p.cor} 50%, ${p.cor2} 50%)`
-                      : p.cor,
-                  }}
+                  style={{ background: p.cor }}
                   aria-hidden
                 />
                 <div className="flex-1 p-3 flex items-start gap-3">
                   <span
                     className="shrink-0 inline-block w-6 h-6 rounded-full mt-0.5 ring-2 ring-white shadow"
-                    style={{
-                      background: p.cor2
-                        ? `linear-gradient(90deg, ${p.cor} 50%, ${p.cor2} 50%)`
-                        : p.cor,
-                    }}
+                    style={{ background: p.cor }}
                     aria-hidden
                   />
                   <div className="flex-1">
@@ -237,14 +229,7 @@ function FichasPage() {
                             style={{ background: p.cor, color: p.corTexto, borderColor: p.cor }}
                           >
                             <span
-                              className="inline-block w-2 h-2 rounded-full"
-                              style={{
-                                background: p.cor2
-                                  ? `linear-gradient(90deg, ${p.cor} 50%, ${p.cor2} 50%)`
-                                  : p.corTexto === "#ffffff" || p.corTexto === "#fff"
-                                    ? "rgba(255,255,255,0.85)"
-                                    : p.corTexto,
-                              }}
+                              className="inline-block w-2 h-2 rounded-full bg-white/80"
                               aria-hidden
                             />
                             {p.nome} · {p.subtitulo}

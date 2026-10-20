@@ -97,9 +97,9 @@ export const PULSEIRAS: Pulseira[] = [
       "Reforçar precauções padrão de biossegurança.",
       "Orientar sinais de alerta entre consultas.",
     ] },
-  { key: "dourada", nome: "Dourada", subtitulo: "Risco de hemorragia",
+  { key: "dourada", nome: "Roxa", subtitulo: "Risco de hemorragia",
     descricao: "Alto risco de sangramento.",
-    cor: "#c9a227", corTexto: "#1a1a1a",
+    cor: "#7d3c98", corTexto: "#ffffff",
     precaucoes: [
       "Checar INR/anticoagulantes/antiagregantes nas últimas 24-72 h.",
       "Hemostáticos locais prontos: ácido tranexâmico, esponja, sutura.",
@@ -108,7 +108,7 @@ export const PULSEIRAS: Pulseira[] = [
     ] },
   { key: "cardio", nome: "Cardiovascular", subtitulo: "HAS, IAM, arritmias, ICC",
     descricao: "Paciente cardiopata ou hipertenso — risco de eventos cardiovasculares.",
-    cor: "#c0392b", cor2: "#c0392b", corTexto: "#ffffff",
+    cor: "#607d8b", cor2: "#607d8b", corTexto: "#ffffff",
     precaucoes: [
       "Aferir PA antes, durante (se longa) e após o procedimento.",
       "Adiar atendimento eletivo se PA ≥ 180/110 mmHg.",
@@ -118,7 +118,7 @@ export const PULSEIRAS: Pulseira[] = [
     ] },
   { key: "cinza", nome: "Cinza + Azul", subtitulo: "Diabético (DM)",
     descricao: "Paciente diabético — risco de hipo/hiperglicemia, atenção ao jejum.",
-    cor: "#607d8b", corTexto: "#ffffff",
+    cor: "#607d8b", cor2: "#2e86c1", corTexto: "#ffffff",
     precaucoes: [
       "NÃO atender em jejum prolongado — orientar alimentação prévia.",
       "Glicosímetro disponível; aferir glicemia se sinais de hipo/hiperglicemia.",

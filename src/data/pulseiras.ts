@@ -108,7 +108,7 @@ export const PULSEIRAS: Pulseira[] = [
     ] },
   { key: "cardio", nome: "Cardiovascular", subtitulo: "HAS, IAM, arritmias, ICC",
     descricao: "Paciente cardiopata ou hipertenso — risco de eventos cardiovasculares.",
-    cor: "#607d8b", cor2: "#607d8b", corTexto: "#ffffff",
+    cor: "#607d8b", corTexto: "#ffffff",
     precaucoes: [
       "Aferir PA antes, durante (se longa) e após o procedimento.",
       "Adiar atendimento eletivo se PA ≥ 180/110 mmHg.",

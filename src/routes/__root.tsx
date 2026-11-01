@@ -81,15 +81,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "apple-mobile-web-app-status-bar-style", content: "default" },
       { name: "apple-mobile-web-app-title", content: "Resposta Rápida" },
       { title: "FAST-RESPONSE - Odontologia Santa Bárbara" },
-      { name: "description", content: "Dental SOS provides quick access to information on systemic emergencies in dentistry." },
+      { name: "description", content: "Acesso rápido a protocolos de urgências e emergências sistêmicas em odontologia." },
       { name: "author", content: "Lovable" },
       { property: "og:title", content: "FAST-RESPONSE - Odontologia Santa Bárbara" },
-      { property: "og:description", content: "Dental SOS provides quick access to information on systemic emergencies in dentistry." },
+      { property: "og:description", content: "Acesso rápido a protocolos de urgências e emergências sistêmicas em odontologia." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
       { name: "twitter:title", content: "FAST-RESPONSE - Odontologia Santa Bárbara" },
-      { name: "twitter:description", content: "Dental SOS provides quick access to information on systemic emergencies in dentistry." },
+      { name: "twitter:description", content: "Acesso rápido a protocolos de urgências e emergências sistêmicas em odontologia." },
     ],
     links: [
       {

@@ -49,8 +49,8 @@ export function AppHeader() {
 
         <a
           href="tel:192"
-          className="inline-flex items-center gap-2 px-3 md:px-4 py-2 rounded-lg text-destructive-foreground font-semibold text-sm hover:scale-[1.02] transition-transform"
-          style={{ background: "var(--gradient-emergency)", boxShadow: "var(--shadow-emergency)" }}
+          className="inline-flex items-center gap-2 px-3 md:px-4 py-2 rounded-lg bg-destructive text-destructive-foreground font-semibold text-sm hover:scale-[1.02] transition-transform"
+          style={{ boxShadow: "var(--shadow-emergency)" }}
         >
           <Phone className="w-4 h-4" />
           SAMU 192
